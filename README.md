@@ -32,7 +32,10 @@ I feel like now I've thought about the work sufficiently and will move on to des
 
 
 # Design
-
+I will be using Figma to design it as it has lots of features like responsive auto layout, frames, and color palettes that make it much quicker and easier to design user interfaces. As I'm designing in isolation I will use this to figure out how I want it to look rather than build out a full wireframe for user testing. I'm starting by collecting screenshots of my past and other companies user manager UIs for inspiration. Next I'm bringing in the tailwind css colors and developing brand identity. I really enjoy blue for building trust but wanted to go with something a little more modern and approachable then a traditional coporate navy blue so I picked a shade of teal for the primary color. Next I choose a secondary lighter teal and an accent golden yellow, and a light stone for the background. Since I'm designing with a top navbar I don't want it to feel heavy weighing down the site or distracting from the main user management table, so I'm going to keep it light and just use a bottom border to seperate it from the rest of the page. I came up with the name "PeoplePanel" for the prand since I think the alliteration is fun and it represents the product well. Next I used procreate to sketch some logo ideas using this name and colors. I decided on two Ps with user icons over the them with the hole being the icons' heads. I then created the vector artwork so it will be responsive and work well in the web app. 
 
 ## Next Steps
-If I had more time I would add features like:
+If I had more time these are features I would consider adding:
+- Dark mode
+- Checkboxes next to each user to allow for selecting multiple for bulk actions
+- Exporting info into spreadsheet
