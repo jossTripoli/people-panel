@@ -8,8 +8,31 @@ These projects exposed me to real architecture tradeoffs, most notably the impor
 
 For this project, I’ll make the admin UI with a clearly separated API layer. I’m choosing Angular and Tailwind CSS because they align with the team’s existing stack and give me a chance to work in the same kind of environment I would be using on the job. Like other frontend frameworks I’ve used, including React and Vue, Angular is well suited for building single-page applications with reusable components and smooth navigation between views which is great for user experience. Tailwind CSS will help me move quickly while keeping spacing, responsive behavior, and interaction states consistent across the application.
 
-
 ## Approach
 I’m approaching this project differently from my usual design process. I believe that good frontend design starts with being informed. This means understanding the problem, business goals, brand identity, competition, and most importantly the users before building a solution. My approach is influenced by my experience with the Design Thinking process (Empathize, Define, Ideate, Prototype, and Test), which I learned hands-on while working at Lehigh’s Human Computer Interaction and Social Computing Research Lab and through NSF I-Corps programs. These experiences taught me to think carefully about user needs, value propositions, and how product decisions connect to business objectives.
 
 For this project, much of that context is not available, so the design is necessarily speculative. I’m using the provided requirements as my source of truth and making reasonable assumptions where needed. The needs established in the brief are: top navigation, an efficient user-management workflow, accessibility, scalability to a large user base, and clear handling of different application states and API interactions. One area not called out directly in the brief is auditability and compliance which is essential for a product like this, so I’ll add it as an additional consideration. I’ll start by outlining my thinking for each of these areas. From there, I’ll create the design in Figma and then implement it using Angular and Tailwind CSS.
+
+### Navigation 
+The spec calls for a top navigation bar, so that is what I will implement. However I would recommend using a collapsible navigation sidebar instead as it scales better as nav items grow and doesn't compete with content for vertical space. For the navbar items I will have the user management page listed as “Users”. This is concise, clear, easy-to-scan, and immediately communicates what the section contains without being verbose like if called “User Management UI”. I also have entries for “Dashboard” which will be where the admin user is first taken to after logging in and contain a high level overview of the system including information like KPIs, recent activity, system status, alerts, etc. For the audit log I'll make the entry "Activity" as this communicates it in a much more approachable way. Lastly, I have a circular profile badge for where the logged in user would be show and able to access account settings.
+
+### User Management 
+Managing users is the core of the application so I will design the primary interface as a data table that makes it easy to scan, search, filter, sort, and take action on users. However from working with them in the past I know there are many pitfalls to them like it being easy to overwhelm users, poor responsiveness with the horizontal and vertical scrollbars on smaller screens, and unclear feedback on states. To avoid overwhelming the user with too much data but still make it easier to add more fields as needed while the product scales, rather than inline table editing I’m using a side panel. On mobile the panel can become a full-screen sheet. To make the table responsive I will make it break down into a stacked list on narrow screens. I’ll add toast status messages and loading indicators like skeleton loaders to show state. 
+
+### Accessibility 
+I am considering accessibility throughout the design rather than treat it as a separate feature. I am using semantic HTML and native elements wherever possible so that controls such as buttons, forms, tables, and navigation work predictably with keyboards and assistive technologies. In the visual design I am using clear color contrast, understandable instructions, strong text hierarchy, readable typography, and visible interaction states. Developing with accessibility will allow me to provide good user experience and a clear maintainable interface throughout the application.
+
+### Scalability 
+I’m designing the system so it can grow over time. Instead of loading all users into the browser at once, which becomes slower and more resource-intensive as the user base grows, I’m using server-side search, filtering, sorting, and pagination so the frontend only requests and renders the data it currently needs. I’m also breaking the interface into reusable components, making it easier to extend while keeping patterns consistent throughout the application.
+
+### Auditability 
+One area not called out directly in the brief is auditability and compliance. For an admin dashboard, I think this is especially important because administrators can make changes that affect other users. I plan to add an activity log that shows who performed the action, which user was affected, what changed, and when it occurred so there is a clear history of what happened and when. I’m not implementing areas like authentication, access control, or additional security safeguards since authentication is outside the scope of this project.
+
+I feel like now I've thought about the work sufficiently and will move on to designing it.
+
+
+# Design
+
+
+## Next Steps
+If I had more time I would add features like:
