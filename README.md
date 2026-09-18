@@ -43,7 +43,8 @@ I have a good sense of how I want it to look so will move on to coding it.
 # Development
 I'm starting by going through the [Angular Documentation](https://angular.dev/overview). I like to learn new frameworks this way as its the most up to date information and I learn best by gaining a good understanding of it and then actively figuring things out myself rather than passively watching videos or llms. 
 
-While developimg I will use clear naming, keep components manageable, and add comments to explain logic. I see that in [Angular 22](https://blog.angular.dev/announcing-angular-v22-c52bb83a4664) developers can now add comments in HTML elements. 
+While developimg I will use clear naming, keep components manageable, and add comments to explain logic. I see that in [Angular 22](https://blog.angular.dev/announcing-angular-v22-c52bb83a4664) developers can now add comments in HTML elements. In order to make it easy to change colors in future as well as implement dark mode I will define tailwind css color theme in styles.css rather than using tailwind's color directly.
+
 
 [Angular coding style guide](https://angular.dev/style-guide)
 
@@ -55,7 +56,18 @@ ng g c [name] [options]
 
 use standard 'class' unlike react which requires className
 
-in order to make it easy to change colors in future as well as implement dark mode I will define tailwind css color theme in styles.css rather than using tailwind's color directly.
+[For block](https://angular.dev/api/core/@for)
+```
+@for (item of items; track item.name) {
+  <li>{{ item.name }}</li>
+} @empty {
+  <li>There are no items.</li>
+}
+```
+
+[Binding dynamic text / text interpolation](https://angular.dev/guide/templates/binding)
+
+
 
 ## Next Steps
 If I had more time these are features I would consider adding:
