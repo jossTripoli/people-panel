@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Breadcrumb } from '../breadcrumb/breadcrumb';
+import { Breadcrumb, BreadcrumbItem } from '../breadcrumb/breadcrumb';
 
 @Component({
   imports: [Breadcrumb],
@@ -7,4 +7,9 @@ import { Breadcrumb } from '../breadcrumb/breadcrumb';
   styleUrl: './users.css',
   templateUrl: './users.html',
 })
-export class Users {}
+export class Users {
+  breadcrumbs: BreadcrumbItem[] = [
+    { label: 'Dashboard', path: '/dashboard' },
+    { label: 'Users' },
+  ];
+}
