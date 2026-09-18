@@ -18,5 +18,8 @@ export class User {
 
   readonly users = this.usersApi.list();
 
-  
+  // log response when component is created (https://angular.dev/guide/components/lifecycle)
+  constructor() {
+    console.log('GET /users response:', this.users);
+  }
 }
