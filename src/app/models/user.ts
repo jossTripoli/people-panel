@@ -11,6 +11,7 @@ export interface UserModel {
   readonly updatedAt: string;
 }
 
+// Describes what will go in the http body
 export interface UsersResponse {
   readonly items: readonly UserModel[];
   readonly total: number;

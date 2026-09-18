@@ -83,6 +83,21 @@ I'm using an Angular service for the user API so the data logic stays separate f
 ng generate service features/users/users-api
 ```
 
+Responses use a shared HTTP-style structure. For example, GET /users returns:
+
+```ts
+{
+  status: 200,
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: {
+    items: User[],
+    total: number
+  }
+}
+```
+
 ## Next Steps
 If I had more time these are features I would consider adding:
 - Dark mode

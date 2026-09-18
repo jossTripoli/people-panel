@@ -1,5 +1,6 @@
 import { Service } from '@angular/core';
-import { UserModel } from '../../models/user';
+import { UserModel, UsersResponse } from '../../models/user';
+import { ApiResponse } from './api-response';
 
 @Service()
 export class UsersApi {
@@ -52,7 +53,17 @@ export class UsersApi {
     },
   ];
 
-  list() {
-    return this.users;
+  // GET /users
+  list(skip = 0, limit = 25): ApiResponse<UsersResponse> {
+    return {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        items: this.users.slice(skip, skip + limit),
+        total: this.users.length,
+      },
+    };
   }
 }
