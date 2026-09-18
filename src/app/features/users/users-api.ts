@@ -1,6 +1,5 @@
 import { Service } from '@angular/core';
 import { UserModel } from '../../models/user';
-import { User } from '../../user/user';
 
 @Service()
 export class UsersApi {
@@ -52,4 +51,8 @@ export class UsersApi {
       updatedAt: '2026-09-10T12:45:00Z',
     },
   ];
+
+  list() {
+    return this.users;
+  }
 }
