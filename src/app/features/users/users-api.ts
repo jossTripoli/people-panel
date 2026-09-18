@@ -31,4 +31,24 @@ export class UsersApi {
       },
     };
   }
+
+  // GET /users/:id
+  get(id: string): ApiResponse<UserModel> {
+    const storedUser = this.users.find((item) => item.user.id === id);
+
+    if (!storedUser) {
+      throw new ApiError(404, 'User not found.');
+    }
+
+    return {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        ETag: `"${storedUser.version}"`,
+      },
+      body: {
+        ...storedUser.user,
+      },
+    };
+  }
 }

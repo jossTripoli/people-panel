@@ -21,5 +21,6 @@ export class User {
   // log response when component is created (https://angular.dev/guide/components/lifecycle)
   constructor() {
     console.log('GET /users response:', this.users);
+    console.log('GET /users/3 response:', this.usersApi.get('user-3'));
   }
 }
