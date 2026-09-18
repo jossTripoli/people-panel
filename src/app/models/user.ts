@@ -10,3 +10,8 @@ export interface User {
   readonly createdAt: string;
   readonly updatedAt: string;
 }
+
+export interface UsersResponse {
+  readonly items: readonly User[];
+  readonly total: number;
+}
