@@ -18,7 +18,7 @@ export class User {
 
   readonly users = this.usersApi.list();
 
-  // log response when component is created (https://angular.dev/guide/components/lifecycle)
+  // testing the api routes
   constructor() {
     console.log('GET /users response:', this.users);
     console.log('GET /users/3 response:', this.usersApi.get('user-3'));
@@ -36,6 +36,11 @@ export class User {
     console.log(
       'GET /users last page:',
       this.usersApi.list(100, 25),
+    );
+
+    console.log(
+      'POST /users/user-1/password-reset response:',
+      this.usersApi.resetPassword('user-1'),
     );
   }
 }

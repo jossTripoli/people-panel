@@ -51,7 +51,7 @@ export class UsersApi {
       },
     };
   }
-  
+
   // POST /users
   create(request: CreateUserRequest): ApiResponse<UserModel> {
     const now = new Date().toISOString();
@@ -81,6 +81,27 @@ export class UsersApi {
       body: {
         ...user,
       },
+    };
+  }
+
+
+  // POST /users/:id/password-reset
+  resetPassword(id: string): ApiResponse<void> {
+    const storedUser = this.users.find((item) => item.user.id === id);
+
+    if (!storedUser) {
+      throw new ApiError(404, 'User not found.');
+    }
+
+    /*
+      In later this action could be implemented by generating a secure one-time password reset token and sending
+      it to the user via reset link by email through an email service such as AWS SES.
+      For now this simulates the successful action.
+    */
+    return {
+      status: 204,
+      headers: {},
+      body: undefined,
     };
   }
 }
