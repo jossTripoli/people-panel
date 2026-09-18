@@ -1,8 +1,14 @@
 <nav aria-label="Breadcrumb" class="mb-5">
   <ol class="flex items-center gap-2 text-sm">
-    @for (item of items(); track item.label) {
+    @for (item of items(); track item.path ?? item.label; let last = $last) {
       <li>
-        {{ item.label }}
+        @if (!last) {
+          <a href="#">
+            {{ item.label }}
+          </a>
+        } @else {
+          {{ item.label }}
+        }
       </li>
     }
   </ol>
