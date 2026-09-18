@@ -6,6 +6,7 @@
   --color-primary: var(--color-teal-900);
   --color-secondary: var(--color-teal-600);
   --color-bg: var(--color-stone-50);
+  --color-divider: var(--color-stone-300);
 }
 
 body {
