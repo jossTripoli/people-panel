@@ -3,13 +3,12 @@ import { Breadcrumb, BreadcrumbItem } from '../breadcrumb/breadcrumb';
 
 @Component({
   imports: [Breadcrumb],
-  selector: 'app-users',
-  styleUrl: './users.css',
-  templateUrl: './users.html',
+  selector: 'app-activity',
+  templateUrl: './activity.html',
 })
-export class Users {
+export class Activity {
   breadcrumbs: BreadcrumbItem[] = [
     { label: 'Dashboard', path: '/' },
-    { label: 'Users' },
+    { label: 'Activity' },
   ];
 }

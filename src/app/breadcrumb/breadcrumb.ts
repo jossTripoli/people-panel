@@ -8,7 +8,6 @@ export interface BreadcrumbItem {
 @Component({
   imports: [RouterLink],
   selector: 'app-breadcrumb',
-  styleUrl: './breadcrumb.css',
   templateUrl: './breadcrumb.html',
 })
 export class Breadcrumb {

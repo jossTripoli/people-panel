@@ -18,6 +18,7 @@
         <a
           [routerLink]="link.path"
           routerLinkActive="font-semibold text-secondary underline decoration-3 decoration-secondary underline-offset-28"
+          [routerLinkActiveOptions]="{ exact: link.path === '/' }"
           ariaCurrentWhenActive="page"
           class="py-3 hover:text-primary sm:py-4"
         >

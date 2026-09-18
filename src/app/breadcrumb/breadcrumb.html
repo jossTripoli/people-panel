@@ -1,15 +1,27 @@
 <nav aria-label="Breadcrumb" class="mb-5">
   <ol class="flex items-center gap-2 text-sm">
+
+    <!-- Loop through items, if last then mark as current page. Otherwise make link and add caret -->
     @for (item of items(); track item.path ?? item.label; let last = $last) {
       <li>
-        @if (!last) {
-          <a href="#">
+        @if (!last && item.path) {
+          <a
+            [routerLink]="item.path"
+            class="hover:text-primary"
+          >
             {{ item.label }}
           </a>
         } @else {
-          {{ item.label }}
+          <span aria-current="page">
+            {{ item.label }}
+          </span>
         }
       </li>
+
+      <!-- Caret separator between items, not after final -->
+      @if (!last) {
+        <span aria-hidden="true">›</span>
+      }
     }
   </ol>
 </nav>
