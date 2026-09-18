@@ -1,7 +1,7 @@
 <nav aria-label="Breadcrumb" class="mb-5">
   <ol class="flex items-center gap-2 text-sm">
 
-    <!-- Loop through items, if last then mark as current page. Otherwise make link and add caret -->
+    <!-- Loop through items, if last then mark as current page. Otherwise make link and add caret. In future if many levels deep can change it on mobile to show outermost with link to preceding level instead of full route -->
     @for (item of items(); track item.path ?? item.label; let last = $last) {
       <li>
         @if (!last && item.path) {

@@ -7,4 +7,24 @@
 </p>
 
 <!-- user table -->
-<div class="mt-10 min-h-48 w-full bg-slate-200"></div>
+<table class="mt-10 w-full text-left bg-slate-200">
+  <thead>
+    <tr>
+      <th class="py-3">Name</th>
+      <th class="py-3">Email</th>
+      <th class="py-3">Role</th>
+      <th class="py-3">Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (user of users; track user.id) {
+      <tr>
+        <td class="py-3">{{ user.name }}</td>
+        <td class="py-3">{{ user.email }}</td>
+        <td class="py-3">{{ user.role }}</td>
+        <td class="py-3">{{ user.status }}</td>
+      </tr>
+    }
+  </tbody>
+</table>

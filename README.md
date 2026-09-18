@@ -67,6 +67,12 @@ use standard 'class' unlike react which requires className
 
 [Binding dynamic text / text interpolation](https://angular.dev/guide/templates/binding)
 
+### User Object Model
+For the user object, I’m adding createdAt and updatedAt timestamps alongside the fields defined in the brief. I’m intentionally keeping the model limited to those fields so I can satisfy the project requirements without introducing unnecessary scope.
+
+There are several additional fields that could be useful in a production system, but each brings product or technical decisions that are outside the scope of this exercise. For example, an emailVerified field would depend on how authentication and verification are handled. Profile images would introduce concerns around file storage, uploads, broken image states, and content moderation. Suspension could also be modeled separately from status, with fields such as a reason, start time, or expiration date, but that would require defining a more detailed account-restriction workflow.
+
+Keeping the model small lets me focus on the core user management experience while leaving room for those capabilities to be added later if the product requirements call for them.
 
 
 ## Next Steps
