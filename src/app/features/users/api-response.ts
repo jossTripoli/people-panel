@@ -12,3 +12,12 @@ export interface ApiResponse<T> {
   readonly headers: Record<string, string>;
   readonly body: T;
 }
+
+export class ApiError extends Error {
+  constructor(
+    readonly status: number,
+    message: string,
+  ) {
+    super(message);
+  }
+}

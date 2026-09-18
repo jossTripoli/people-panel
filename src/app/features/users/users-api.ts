@@ -1,6 +1,6 @@
 import { Service } from '@angular/core';
 import { UserModel, UsersResponse } from '../../models/user';
-import { ApiResponse } from './api-response';
+import { ApiResponse, ApiError } from './api-response';
 
 @Service()
 export class UsersApi {
@@ -55,6 +55,14 @@ export class UsersApi {
 
   // GET /users
   list(skip = 0, limit = 25): ApiResponse<UsersResponse> {
+    if (!Number.isInteger(skip) || skip < 0) {
+      throw new ApiError(400, 'Invalid skip value.');
+    }
+
+    if (!Number.isInteger(limit) || limit < 1 || limit > 100) {
+      throw new ApiError(400, 'Invalid limit value.');
+    }
+
     return {
       status: 200,
       headers: {
