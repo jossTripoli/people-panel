@@ -1,7 +1,7 @@
 export type UserRole = 'Admin' | 'Editor' | 'Viewer';
 export type UserStatus = 'Active' | 'Invited' | 'Suspended';
 
-export interface User {
+export interface UserModel {
   readonly id: string;
   readonly name: string;
   readonly email: string;
@@ -12,6 +12,6 @@ export interface User {
 }
 
 export interface UsersResponse {
-  readonly items: readonly User[];
+  readonly items: readonly UserModel[];
   readonly total: number;
 }

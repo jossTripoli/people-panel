@@ -74,6 +74,14 @@ There are several additional fields that could be useful in a production system,
 
 Keeping the model small lets me focus on the core user management experience while leaving room for those capabilities to be added later if the product requirements call for them.
 
+### API Service
+[Creating and using services](https://v20.angular.dev/guide/di/creating-and-using-services?utm_source=chatgpt.com)
+
+I'm using an Angular service for the user API so the data logic stays separate from the page components. The service will handle listing, creating, updating users, pagination, headers, and errors. For this project I'm having it use an in-memory store but keeping the API behind a service will make it easy to swap for a real backend later without changing the UI.
+
+```
+ng generate service features/users/users-api
+```
 
 ## Next Steps
 If I had more time these are features I would consider adding:

@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { Breadcrumb, BreadcrumbItem } from '../breadcrumb/breadcrumb';
-import { User } from '../models/user';
+import { UserModel } from '../models/user';
 
 @Component({
   imports: [Breadcrumb],
-  selector: 'app-users',
-  templateUrl: './users.html',
+  selector: 'app-user',
+  templateUrl: './user.html',
 })
-export class Users {
+export class User {
   breadcrumbs: BreadcrumbItem[] = [
     { label: 'Dashboard', path: '/' },
-    { label: 'Users' },
+    { label: 'User' },
   ];
 
-  readonly users: readonly User[] = [
+  readonly user: readonly UserModel[] = [
     {
       id: 'user-1',
       name: 'Joss Tripoli',

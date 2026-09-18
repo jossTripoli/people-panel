@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { Users } from './users/users';
+import { User } from './user/user';
 import { Dashboard } from './dashboard/dashboard';
 import { Activity } from './activity/activity';
 
@@ -11,7 +11,7 @@ export const routes: Routes = [
   },
   {
     path: 'users',
-    component: Users,
+    component: User,
   },
   {
     path: 'activity',
