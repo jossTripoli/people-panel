@@ -1,7 +1,7 @@
 <header class="border-b-2 border-divider">
 
-  <!-- Flex row so navbar items say aligned across the navbar -->
-  <div class="flex items-center mx-auto max-w-screen-2xl px-6">
+  <!-- Flex keeps the navbar in one row on larger screens. Collapses on smaller screens -->
+  <div class="flex flex-wrap items-center mx-auto max-w-screen-2xl px-4 gap-x-6">
     <a routerLink="/users" class="flex items-center gap-3 py-4">
       <img src="/logo.svg" alt="" class="w-12" />
 
@@ -10,23 +10,27 @@
       </span>
     </a>
 
-    <nav aria-label="Main navigation">
+    <nav
+      aria-label="Main navigation"
+      class="order-last flex w-full gap-8 sm:order-0 sm:w-auto"
+    >
       @for (link of links; track link.path) {
         <a
           [routerLink]="link.path"
           routerLinkActive="font-semibold underline underline-offset-8"
           ariaCurrentWhenActive="page"
-          class="py-4 px-4 hover:text-primary"
+          class="py-3 hover:text-primary sm:py-4"
         >
           {{ link.label }}
         </a>
       }
-      
     </nav>
 
-    <div class="ml-auto h-9 w-9 rounded-full bg-primary text-white font-semibold flex items-center justify-center" aria-label="Current user">
+    <div
+      class="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white font-semibold"
+      aria-label="Current user"
+    >
       J
     </div>
-    
   </div>
 </header>
