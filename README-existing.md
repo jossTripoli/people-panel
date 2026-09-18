@@ -45,6 +45,13 @@ I'm starting by going through the [Angular Documentation](https://angular.dev/ov
 
 I will switch to add comments to code directly instead or here in the README.
 
+[Angular coding style guide](https://angular.dev/style-guide)
+
+[Generate Component](https://angular.dev/cli/generate/component)
+```
+ng generate component [name] [options]
+ng g c [name] [options]
+```
 
 ## Next Steps
 If I had more time these are features I would consider adding:
