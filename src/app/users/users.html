@@ -6,25 +6,28 @@
   Manage users, roles, and access across your organization.
 </p>
 
-<!-- user table -->
-<table class="mt-10 w-full text-left bg-slate-200">
-  <thead>
-    <tr>
-      <th class="py-3">Name</th>
-      <th class="py-3">Email</th>
-      <th class="py-3">Role</th>
-      <th class="py-3">Status</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    @for (user of users; track user.id) {
-      <tr>
-        <td class="py-3">{{ user.name }}</td>
-        <td class="py-3">{{ user.email }}</td>
-        <td class="py-3">{{ user.role }}</td>
-        <td class="py-3">{{ user.status }}</td>
+<div class="mt-10 overflow-hidden rounded-md border border-divider bg-white/90">
+  <table class="w-full text-left">
+    <thead class="bg-secondary/10">
+      <tr class="border-b border-divider">
+        <th class="px-4 py-3 font-semibold">Name</th>
+        <th class="px-4 py-3 font-semibold">Email</th>
+        <th class="px-4 py-3 font-semibold">Role</th>
+        <th class="px-4 py-3 font-semibold">Status</th>
       </tr>
-    }
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      @for (user of users; track user.id) {
+        <tr
+          class="border-b border-divider transition-colors last:border-b-0 hover:bg-slate-50"
+        >
+          <td class="px-4 py-4">{{ user.name }}</td>
+          <td class="px-4 py-4">{{ user.email }}</td>
+          <td class="px-4 py-4">{{ user.role }}</td>
+          <td class="px-4 py-4">{{ user.status }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

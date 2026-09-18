@@ -41,6 +41,24 @@ export class Users {
       createdAt: '2026-09-01T12:00:00Z',
       updatedAt: '2026-09-01T12:00:00Z',
     },
+    {
+      id: 'user-4',
+      name: 'Bob Joe',
+      email: 'bob@example.com',
+      role: 'Viewer',
+      status: 'Active',
+      createdAt: '2026-08-12T09:00:00Z',
+      updatedAt: '2026-09-11T12:45:00Z',
+    },
+    {
+      id: 'user-5',
+      name: 'Jane Johns',
+      email: 'jane@example.com',
+      role: 'Viewer',
+      status: 'Active',
+      createdAt: '2026-08-17T07:00:00Z',
+      updatedAt: '2026-09-10T12:45:00Z',
+    },
   ];
  
 }
