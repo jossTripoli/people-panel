@@ -1,5 +1,5 @@
 import { Service } from '@angular/core';
-import { UserModel, UserRole, UserStatus, UsersResponse } from '../../models/user';
+import { UserModel, UsersResponse, CreateUserRequest } from '../../models/user';
 import { ApiResponse, ApiError } from './api-response';
 import { seedUsers, StoredUser } from './seed-users';
 
@@ -48,6 +48,38 @@ export class UsersApi {
       },
       body: {
         ...storedUser.user,
+      },
+    };
+  }
+  
+  // POST /users
+  create(request: CreateUserRequest): ApiResponse<UserModel> {
+    const now = new Date().toISOString();
+    const number = this.users.length + 1;
+
+    const user: UserModel = {
+      id: `user-${number}`,
+      name: request.name,
+      email: request.email,
+      role: request.role,
+      status: request.status,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    this.users.push({
+      user,
+      version: 1,
+    });
+
+    return {
+      status: 201,
+      headers: {
+        'Content-Type': 'application/json',
+        ETag: '"1"',
+      },
+      body: {
+        ...user,
       },
     };
   }

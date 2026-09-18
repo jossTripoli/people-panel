@@ -16,3 +16,10 @@ export interface UsersResponse {
   readonly items: readonly UserModel[];
   readonly total: number;
 }
+
+export interface CreateUserRequest {
+  name: string;
+  email: string;
+  role: UserRole;
+  status: UserStatus;
+}
