@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { UsersApi } from '../features/users/users-api';
 
 @Component({
   imports: [RouterLink],
@@ -7,5 +8,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './dashboard.html',
 })
 export class Dashboard {
+  private readonly usersApi = inject(UsersApi);
 
+  snapshot = this.usersApi.getSnapshot();
 }

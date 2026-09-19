@@ -149,4 +149,21 @@ export class UsersApi {
       },
     };
   }
+
+  // get stats for dashboard snapshot
+  getSnapshot() {
+    return {
+      total: this.users.length,
+      active: this.users.filter(
+        (storedUser) => storedUser.user.status === 'Active',
+      ).length,
+      invited: this.users.filter(
+        (storedUser) => storedUser.user.status === 'Invited',
+      ).length,
+      suspended: this.users.filter(
+        (storedUser) => storedUser.user.status === 'Suspended',
+      ).length,
+    };
+  }
+
 }
