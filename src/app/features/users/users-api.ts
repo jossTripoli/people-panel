@@ -112,8 +112,14 @@ export class UsersApi {
     request: UpdateUserRequest,
     ifMatch: string,
   ): ApiResponse<UserModel> {
-    // 1. Find the user by ID.
-    // 2. Return 404 if the user does not exist.    
+    const storedUser = this.users.find((item) => item.user.id === id);
+    
+    if (!storedUser) {
+      throw new ApiError(404, 'User not found.');
+    }
+
+    // 3. Build the user's current ETag from its stored version. Compare If-Match with the current ETag. Return 412 if they do not match.
+
     // 4. Create the updated user data and update updatedAt.
     // 5. Save the updated user and increment its version.
     // 6. Return the updated user.
