@@ -87,13 +87,39 @@ export class User {
     status: 'Active',
   };
 
-  createUser() {
+  message = '';
+  messageType: 'success' | 'error' = 'success';
+
+createUser() {
+  try {
     const response = this.usersApi.create(this.newUser);
 
-    console.log('POST /users response:', response);
+    this.message = `${response.body.name} was created successfully.`;
+    this.messageType = 'success';
+
+    const totalUsers = this.usersApi.list(0, this.limit).body.total;
+
+    this.skip = Math.floor((totalUsers - 1) / this.limit) * this.limit;
+    this.users = this.usersApi.list(this.skip, this.limit);
+
+    this.newUser = {
+      name: '',
+      email: '',
+      role: 'Viewer',
+      status: 'Active',
+    };
 
     this.isCreating = false;
+  } catch (error) {
+    this.messageType = 'error';
+
+    if (error instanceof ApiError) {
+      this.message = error.message;
+    } else {
+      this.message = 'Something went wrong while creating the user.';
+    }
   }
+}
 
   // testing the api routes
   constructor() {

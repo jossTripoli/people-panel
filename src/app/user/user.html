@@ -14,6 +14,28 @@
   Create User
 </button>
 
+@if (message) {
+  <div
+    class="mt-4 flex items-center justify-between rounded-md border px-4 py-3"
+    [class.bg-green-50]="messageType === 'success'"
+    [class.bg-red-50]="messageType === 'error'"
+    role="status"
+  >
+    <p class="text-sm text-slate-700">
+      {{ message }}
+    </p>
+
+    <button
+      type="button"
+      class="cursor-pointer text-xl leading-none text-slate-500 hover:text-slate-900"
+      aria-label="Dismiss message"
+      (click)="message = ''"
+    >
+      ×
+    </button>
+  </div>
+}
+
 @if (isCreating) {
   <div class="mt-6 rounded-md border border-divider bg-white p-6">
     <h2 class="text-lg font-semibold">Create User Form</h2>
