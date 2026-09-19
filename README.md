@@ -5,6 +5,42 @@ This project is a user management UI for an application administrator. I assume 
 View the deployed application at:  
 https://people-panel.vercel.app/
 
+## Running the Project Locally
+
+### Prerequisites
+
+Before starting, make sure you have:
+
+- Node.js 22.22.3 or newer
+- pnpm
+- Angular CLI
+
+### Install dependencies
+
+From the project directory, run:
+
+```bash
+pnpm install
+```
+
+### Start development server
+
+To start a local development server, run:
+
+```bash
+pnpm start
+```
+
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. 
+
+## Building
+
+To build the project run:
+
+```bash
+ng build
+```
+
 ## Architecture Decisions
 I’ve designed and built several admin and internal dashboards before, so the core problem is familiar. At DART Collective, I worked on dashboards for managing users, learner analytics, donors and donations, course creation, and educator workflows. At MiniNature Reserve, I built a custom admin dashboard that lets the team manage site content, team member profiles, and permissions for tasks like authoring blog posts.
 
