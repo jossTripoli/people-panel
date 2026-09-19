@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Breadcrumb, BreadcrumbItem } from '../breadcrumb/breadcrumb';
 import { UsersApi } from '../features/users/users-api';
+import { ApiError } from '../features/users/api-response';
 
 @Component({
   imports: [Breadcrumb],
@@ -68,5 +69,27 @@ export class User {
       'GET /users/user-1 after update:',
       this.usersApi.get('user-1'),
     );
+
+    // testing stale ETAG
+    try {
+      this.usersApi.update(
+        'user-1',
+        {
+          name: 'Another update',
+          email: 'another@example.com',
+          role: 'Viewer',
+          status: 'Invited',
+        },
+        original.headers['ETag'],
+      );
+    } catch (error) {
+      if (error instanceof ApiError) {
+        console.log('PUT /users/user-1 stale ETag error:', {
+          status: error.status,
+          message: error.message,
+        });
+      }
+    }
+
   }
 }
