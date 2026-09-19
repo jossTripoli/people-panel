@@ -143,8 +143,12 @@ export class User implements OnDestroy {
     // Cancel any previous simulated request.
     if (this.userLoadingTimer) {
       clearTimeout(this.userLoadingTimer);
+      this.userLoadingTimer = null;
     }
 
+    // Clear any message above the table.
+    this.message = '';
+  
     // Start with fresh sidebar state & open immediately (i.e. before the user data loads and use skeleton placeholders)
     this.selectedUser = null;
     this.selectedUserETag = '';
@@ -374,6 +378,28 @@ export class User implements OnDestroy {
     }
   }
 
+  resetPassword() {
+    if (!this.selectedUser) {
+      return;
+    }
+
+    try {
+      this.usersApi.resetPassword(this.selectedUser.id);
+
+      this.sidebarMessage =
+        `Password reset instructions were sent for ${this.selectedUser.name}.`;
+      this.sidebarMessageType = 'success';
+    } catch (error) {
+      this.sidebarMessageType = 'error';
+
+      if (error instanceof ApiError) {
+        this.sidebarMessage = error.message;
+      } else {
+        this.sidebarMessage =
+          'Something went wrong while resetting the password.';
+      }
+    }
+  }
   // testing the api routes
   // constructor() {
   //   console.log('GET /users response:', this.users);
