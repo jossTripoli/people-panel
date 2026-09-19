@@ -18,6 +18,26 @@
   <div class="mt-6 rounded-md border border-divider bg-white p-6">
     <h2 class="text-lg font-semibold">Create User Form</h2>
 
+    <div>
+      <label for="name" class="text-slate-700 font-medium">Name</label>
+      <input
+        id="name"
+        type="text"
+        [(ngModel)]="newUser.name"
+        class="mt-1 w-full rounded-md border border-divider px-3 py-2"
+      />
+    </div>
+
+    <div>
+      <label for="email" class="text-slate-700 font-medium">Email</label>
+      <input
+        id="email"
+        type="email"
+        [(ngModel)]="newUser.email"
+        class="mt-1 w-full rounded-md border border-divider px-3 py-2"
+      />
+    </div>
+
     <button
       type="button"
       class="mt-4 text-sm underline cursor-pointer"

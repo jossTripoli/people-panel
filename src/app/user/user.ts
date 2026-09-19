@@ -2,9 +2,10 @@ import { Component, inject } from '@angular/core';
 import { Breadcrumb, BreadcrumbItem } from '../breadcrumb/breadcrumb';
 import { UsersApi } from '../features/users/users-api';
 import { ApiError } from '../features/users/api-response';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  imports: [Breadcrumb],
+  imports: [Breadcrumb, FormsModule],
   selector: 'app-user',
   templateUrl: './user.html',
 })
@@ -21,6 +22,14 @@ export class User {
 
   // to control wether the creation form is shown
   isCreating = false;
+
+  // creates the newUser class which defines the data model reflected in the form.
+  newUser = {
+    name: '',
+    email: '',
+    role: 'Viewer',
+    status: 'Active',
+  };
 
   // testing the api routes
   constructor() {
