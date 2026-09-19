@@ -119,13 +119,18 @@ Because the API is backed by an in-memory store the requests are complete almost
 
 - [ChangeDetectorRef](https://angular.dev/api/core/ChangeDetectorRef)
 
-The sidebar supports separate view and edit states. When editing begins, the current user values are copied into an `UpdateUserRequest` model so changes can be made without mutating the displayed user before the update succeeds. Saving changes calls `PUT /users/:id` and sends the ETag from the most recent `GET /users/:id` request through `If-Match`. If the update succeeds, the sidebar stores the updated user and the new ETag returned by the API, then refreshes the current table page so the edited values are reflected immediately. If the stored ETag is stale, the API returns `412 Precondition Failed`. The UI handles this separately from other errors so the administrator is told that the record changed after it was opened and to reload before trying again. But I'm going to add recovery actions instead of asking them to reload next for better user experience.
+The sidebar supports separate view and edit states. When editing begins, the current user values are copied into an `UpdateUserRequest` model so changes can be made without mutating the displayed user before the update succeeds. Saving changes calls `PUT /users/:id` and sends the ETag from the most recent `GET /users/:id` request through `If-Match`. If the update succeeds, the sidebar stores the updated user and the new ETag returned by the API, then refreshes the current table page so the edited values are reflected immediately. If the stored ETag is stale, the API returns `412 Precondition Failed`. The UI handles this separately from other errors so the administrator is told that the record changed after it was opened and presented with recovery actions.
 
+### Edit Conflict Recovery
+
+When an update returns `412 Precondition Failed`, the sidebar UI gives the administrator two explicit recovery choices.
+
+In the UI, I use the labels **Discard my changes** and **Keep my changes** instead of reload and overwrite as described in the brief because they describe the outcome in terms of the administrator's current edits rather than the underlying HTTP behavior. This makes the recovery options clearer to someone who does not need to understand ETags or optimistic concurrency.
 
 ## Next Steps
 If I had more time these are features I would consider adding:
 - Filtering and Sorting
-- Make status a colored status badge
+- Make status a colored status badge instead of plain text
 - Add skeleton loaders to rest of components
 - Dark mode support
 - Checkboxes next to each user to allow for selecting multiple for bulk actions

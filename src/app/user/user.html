@@ -274,7 +274,38 @@
         ×
       </button>
     </div>
-    @if (sidebarMessage) {
+    @if (hasEditConflict) {
+      <div
+        class="mx-6 mt-4 rounded-md border border-red-200 bg-red-50 p-4"
+        role="alert"
+      >
+        <p class="text-sm font-medium text-red-800">
+          This user was updated while you were editing.
+        </p>
+
+        <p class="mt-1 text-sm text-red-700">
+          Choose how you want to continue:
+        </p>
+
+        <div class="mt-4 grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            class="cursor-pointer rounded-md border border-divider bg-white px-3 py-2 text-sm"
+            (click)="loadLatestUser()"
+          >
+            Discard my changes
+          </button>
+
+          <button
+            type="button"
+            class="cursor-pointer rounded-md bg-primary px-3 py-2 text-sm font-medium text-white"
+            (click)="keepMyChanges()"
+          >
+            Keep my changes
+          </button>
+        </div>
+      </div>
+    } @else if (sidebarMessage) {
       <div
         class="mx-6 mt-4 flex items-center justify-between rounded-md border px-4 py-3"
         [class.bg-green-50]="sidebarMessageType === 'success'"
@@ -460,6 +491,15 @@
           </button>
         }
       </div>
+      @if (isEditingUser && !isLoadingUser && selectedUser) {
+        <button
+          type="button"
+          class="cursor-pointer rounded-md border border-red-200 text-left ml-6 mt-4 px-3 py-2 text-sm"
+          (click)="simulateConcurrentUpdate()"
+        >
+          Simulate Concurrent Update
+        </button>
+      }
     }
   </aside>
 }

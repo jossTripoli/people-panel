@@ -92,6 +92,7 @@ export class User implements OnDestroy {
   message = '';
   messageType: 'success' | 'error' = 'success';
   isCreatingUser = false;
+  hasEditConflict = false;
 
   createUser() {
     try {
@@ -144,17 +145,20 @@ export class User implements OnDestroy {
       clearTimeout(this.userLoadingTimer);
     }
 
-    // Open the sidebar immediately before the user data loads and use skeleton placeholders
+    // Start with fresh sidebar state & open immediately (i.e. before the user data loads and use skeleton placeholders)
     this.selectedUser = null;
     this.selectedUserETag = '';
     this.isLoadingUser = true;
+    this.isEditingUser = false;
 
     // Clear any message from the previously opened user and reset type
     this.sidebarMessage = '';
     this.sidebarMessageType = 'success';
+    // for 412 error recovery actions reset it too
+    this.hasEditConflict = false;
       
     // Simulate network latency while using the in-memory api
-    setTimeout(() => {
+    this.userLoadingTimer = setTimeout(() => {
       try {
         const response = this.usersApi.get(id);
 
@@ -172,6 +176,7 @@ export class User implements OnDestroy {
         }
       } finally {
         this.isLoadingUser = false;
+        this.userLoadingTimer = null;
 
         // Tell Angular immediately update the view after the simulated delay
         this.changeDetector.detectChanges();
@@ -180,15 +185,27 @@ export class User implements OnDestroy {
   }
 
   closeUserDetails() {
-    // cancel pending loading times when sidebar closes
+    // cancel pending simulated request loading times when sidebar closes
     if (this.userLoadingTimer) {
       clearTimeout(this.userLoadingTimer);
       this.userLoadingTimer = null;
     }
 
+    // Reset all user-details sidebar state.
     this.selectedUser = null;
     this.selectedUserETag = '';
     this.isLoadingUser = false;
+    this.sidebarMessage = '';
+    this.sidebarMessageType = 'success';
+
+    this.hasEditConflict = false;
+
+    this.editUser = {
+      name: '',
+      email: '',
+      role: 'Viewer',
+      status: 'Active',
+    };
   }
 
   // seperate editable copy of data so selectedUser isn't immediately changed until changes are submitted
@@ -241,8 +258,9 @@ export class User implements OnDestroy {
       this.messageType = 'error';
 
       if (error instanceof ApiError && error.status === 412) {
-        this.sidebarMessage  =
-          'This user was changed since you opened it. Reload the user and try again.';
+        this.hasEditConflict = true;
+        this.sidebarMessageType = 'error';
+        this.sidebarMessage = 'This user was updated while you were editing. Choose how you want to continue.';
       } else if (error instanceof ApiError) {
         this.sidebarMessage  = error.message;
       } else {
@@ -255,6 +273,104 @@ export class User implements OnDestroy {
   ngOnDestroy() {
     if (this.userLoadingTimer) {
       clearTimeout(this.userLoadingTimer);
+    }
+  }
+
+  simulateConcurrentUpdate() {
+    if (!this.selectedUser) {
+      return;
+    }
+
+    const latest = this.usersApi.get(this.selectedUser.id);
+
+    this.usersApi.update(
+      this.selectedUser.id,
+      {
+        name: latest.body.name,
+        email: latest.body.email,
+        role: latest.body.role,
+        status: latest.body.status,
+      },
+      latest.headers['ETag'],
+    );
+
+    this.sidebarMessage =
+      'Concurrent update simulated. Click Save Changes to test the conflict.';
+    this.sidebarMessageType = 'success';
+  }
+
+  loadLatestUser() {
+    if (!this.selectedUser) {
+      return;
+    }
+
+    try {
+      const response = this.usersApi.get(this.selectedUser.id);
+
+      this.selectedUser = response.body;
+      this.selectedUserETag = response.headers['ETag'];
+
+      this.editUser = {
+        name: response.body.name,
+        email: response.body.email,
+        role: response.body.role,
+        status: response.body.status,
+      };
+
+      this.hasEditConflict = false;
+
+      this.sidebarMessage =
+        'The latest version has been loaded. Review it before saving.';
+      this.sidebarMessageType = 'success';
+    } catch (error) {
+      this.sidebarMessageType = 'error';
+
+      if (error instanceof ApiError) {
+        this.sidebarMessage = error.message;
+      } else {
+        this.sidebarMessage = 'Something went wrong while loading the latest user.';
+      }
+    }
+  }
+
+  keepMyChanges() {
+    if (!this.selectedUser) {
+      return;
+    }
+
+    try {
+      // Get the newest ETag first.
+      const latest = this.usersApi.get(this.selectedUser.id);
+
+      // Retry using the edits already in the form.
+      const response = this.usersApi.update(
+        this.selectedUser.id,
+        this.editUser,
+        latest.headers['ETag'],
+      );
+
+      this.selectedUser = response.body;
+      this.selectedUserETag = response.headers['ETag'];
+
+      this.users = this.usersApi.list(this.skip, this.limit);
+
+      this.isEditingUser = false;
+      this.hasEditConflict = false;
+
+      this.sidebarMessage =
+        `${response.body.name} was updated successfully.`;
+      this.sidebarMessageType = 'success';
+    } catch (error) {
+      this.sidebarMessageType = 'error';
+
+      if (error instanceof ApiError && error.status === 412) {
+        this.sidebarMessage =
+          'The user changed again before the update completed. Try again.';
+      } else if (error instanceof ApiError) {
+        this.sidebarMessage = error.message;
+      } else {
+        this.sidebarMessage = 'Something went wrong while updating the user.';
+      }
     }
   }
 
