@@ -249,6 +249,7 @@
   </div>
 </div>
 
+<!-- Controls showing sidebar -->
 @if (isLoadingUser || selectedUser) {
   <!-- Dark overlay behind the sidebar -->
   <div
@@ -264,7 +265,6 @@
   >
     <div class="flex items-center justify-between p-6 bg-secondary/10">
       <h2 class="text-xl font-semibold">User Details</h2>
-
       <button
         type="button"
         class="cursor-pointer text-2xl leading-none text-slate-500 hover:text-slate-900"
@@ -274,78 +274,191 @@
         ×
       </button>
     </div>
+    @if (sidebarMessage) {
+      <div
+        class="mx-6 mt-4 flex items-center justify-between rounded-md border px-4 py-3"
+        [class.bg-green-50]="sidebarMessageType === 'success'"
+        [class.bg-red-50]="sidebarMessageType === 'error'"
+        role="status"
+      >
+        <p class="text-sm text-slate-700">
+          {{ sidebarMessage }}
+        </p>
 
-    <div class="mt-6 px-6 space-y-5">
+        <button
+          type="button"
+          class="cursor-pointer text-xl leading-none text-slate-500 hover:text-slate-900"
+          aria-label="Dismiss sidebar message"
+          (click)="sidebarMessage = ''"
+        >
+          ×
+        </button>
+      </div>
+    }
+
+    <div class="mt-6 space-y-5 px-6">
+      @if (isLoadingUser) {
         <div>
           <p class="text-sm font-medium text-slate-500">Name</p>
-          @if (isLoadingUser) {
-            <div class="mt-2 h-5 w-40 animate-pulse rounded bg-slate-200"></div>
-          } @else if (selectedUser) {
-            <p class="mt-1">{{ selectedUser.name }}</p>
-          }
+          <div class="mt-2 h-5 w-40 animate-pulse rounded bg-slate-200"></div>
         </div>
 
         <div>
           <p class="text-sm font-medium text-slate-500">Email</p>
-          @if (isLoadingUser) {
-            <div class="mt-2 h-5 w-56 animate-pulse rounded bg-slate-200"></div>
-          } @else if (selectedUser) {
-            <p class="mt-1">{{ selectedUser.email }}</p>
-          }
+          <div class="mt-2 h-5 w-56 animate-pulse rounded bg-slate-200"></div>
         </div>
 
         <div>
           <p class="text-sm font-medium text-slate-500">Role</p>
-          @if (isLoadingUser) {
-            <div class="mt-2 h-5 w-24 animate-pulse rounded bg-slate-200"></div>
-          } @else if (selectedUser) {
-            <p class="mt-1">{{ selectedUser.role }}</p>
-          }
+          <div class="mt-2 h-5 w-24 animate-pulse rounded bg-slate-200"></div>
         </div>
 
         <div>
           <p class="text-sm font-medium text-slate-500">Status</p>
-          @if (isLoadingUser) {
-            <div class="mt-2 h-5 w-24 animate-pulse rounded bg-slate-200"></div>
-          } @else if (selectedUser) {
-            <p class="mt-1">{{ selectedUser.status }}</p>
-          }        
+          <div class="mt-2 h-5 w-24 animate-pulse rounded bg-slate-200"></div>
         </div>
 
         <div>
           <p class="text-sm font-medium text-slate-500">Created</p>
-          @if (isLoadingUser) {
-            <div class="mt-2 h-5 w-36 animate-pulse rounded bg-slate-200"></div>
-          } @else if (selectedUser) {
-            <p class="mt-1">{{ selectedUser.createdAt }}</p>
-          }        
+          <div class="mt-2 h-5 w-36 animate-pulse rounded bg-slate-200"></div>
         </div>
 
         <div>
           <p class="text-sm font-medium text-slate-500">Last Updated</p>
-          @if (isLoadingUser) {
-            <div class="mt-2 h-5 w-36 animate-pulse rounded bg-slate-200"></div>
-          } @else if (selectedUser) {
-            <p class="mt-1">{{ selectedUser.updatedAt }}</p>
-          }        
+          <div class="mt-2 h-5 w-36 animate-pulse rounded bg-slate-200"></div>
         </div>
+      } @else if (selectedUser) {
+        @if (isEditingUser) {
+          <div>
+            <label for="edit-name" class="text-sm font-medium text-slate-700">
+              Name
+            </label>
+            <input
+              id="edit-name"
+              type="text"
+              [(ngModel)]="editUser.name"
+              class="mt-1 w-full rounded-md border border-divider px-3 py-2"
+            />
+          </div>
+
+          <div>
+            <label for="edit-email" class="text-sm font-medium text-slate-700">
+              Email
+            </label>
+            <input
+              id="edit-email"
+              type="email"
+              [(ngModel)]="editUser.email"
+              class="mt-1 w-full rounded-md border border-divider px-3 py-2"
+            />
+          </div>
+
+          <div>
+            <label for="edit-role" class="text-sm font-medium text-slate-700">
+              Role
+            </label>
+            <select
+              id="edit-role"
+              [(ngModel)]="editUser.role"
+              class="mt-1 w-full rounded-md border border-divider px-3 py-2"
+            >
+              <option value="Admin">Admin</option>
+              <option value="Editor">Editor</option>
+              <option value="Viewer">Viewer</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="edit-status" class="text-sm font-medium text-slate-700">
+              Status
+            </label>
+            <select
+              id="edit-status"
+              [(ngModel)]="editUser.status"
+              class="mt-1 w-full rounded-md border border-divider px-3 py-2"
+            >
+              <option value="Active">Active</option>
+              <option value="Invited">Invited</option>
+              <option value="Suspended">Suspended</option>
+            </select>
+          </div>
+
+          <div>
+            <p class="text-sm font-medium text-slate-500">Created</p>
+            <p class="mt-1">{{ selectedUser.createdAt }}</p>
+          </div>
+
+          <div>
+            <p class="text-sm font-medium text-slate-500">Last Updated</p>
+            <p class="mt-1">{{ selectedUser.updatedAt }}</p>
+          </div>
+        } @else {
+          <div>
+            <p class="text-sm font-medium text-slate-500">Name</p>
+            <p class="mt-1">{{ selectedUser.name }}</p>
+          </div>
+
+          <div>
+            <p class="text-sm font-medium text-slate-500">Email</p>
+            <p class="mt-1">{{ selectedUser.email }}</p>
+          </div>
+
+          <div>
+            <p class="text-sm font-medium text-slate-500">Role</p>
+            <p class="mt-1">{{ selectedUser.role }}</p>
+          </div>
+
+          <div>
+            <p class="text-sm font-medium text-slate-500">Status</p>
+            <p class="mt-1">{{ selectedUser.status }}</p>
+          </div>
+
+          <div>
+            <p class="text-sm font-medium text-slate-500">Created</p>
+            <p class="mt-1">{{ selectedUser.createdAt }}</p>
+          </div>
+
+          <div>
+            <p class="text-sm font-medium text-slate-500">Last Updated</p>
+            <p class="mt-1">{{ selectedUser.updatedAt }}</p>
+          </div>
+        }
+      }
     </div>
-
     @if (!isLoadingUser && selectedUser) {
-      <div class="mt-4 p-6 flex gap-3">
-        <button
-          type="button"
-          class="cursor-pointer rounded-md border bg-primary px-4 py-2 font-medium text-white hover:opacity-90"
-        >
-          Edit User
-        </button>
+      <div class="mt-4 flex gap-3 p-6">
+        @if (isEditingUser) {
+          <button
+            type="button"
+            class="cursor-pointer rounded-md border border-divider px-4 py-2"
+            (click)="cancelEditingUser()"
+          >
+            Cancel
+          </button>
 
-        <button
-          type="button"
-          class="cursor-pointer rounded-md border border-divider px-4 py-2"
-        >
-          Reset Password
-        </button>
+          <button
+            type="button"
+            class="cursor-pointer rounded-md border bg-primary px-4 py-2 font-medium text-white hover:opacity-90"
+            (click)="saveUser()"
+          >
+            Save Changes
+          </button>
+        } @else {
+          <button
+            type="button"
+            class="cursor-pointer rounded-md border bg-primary px-4 py-2 font-medium text-white hover:opacity-90"
+            (click)="startEditingUser()"
+          >
+            Edit User
+          </button>
+
+          <button
+            type="button"
+            class="cursor-pointer rounded-md border border-divider px-4 py-2"
+          >
+            Reset Password
+          </button>
+        }
       </div>
     }
   </aside>

@@ -113,11 +113,14 @@ The user management UI is wired to the in-memory API service rather than reading
 
 Since there will be many users I am going to add pagination that is in a fixed bar so when changing how many rows to view at once it won't be pushed down the page. I'm also giving the clear information about what page they are on and how many users they are viewing.
 
-### Loading States
+### Loading States & Editing for User Details
 
 Because the API is backed by an in-memory store the requests are complete almost immediately. To make loading states visible and demonstrate how the interface would behave with real network latency I'm adding a short simulated delay using `setTimeout` when clicking to view the user. I'm using angular's `ChangeDetectorRef` to update the view after the delayed operation completes. Tailwind css animation makes it very easy to add the pulsating skeleton loaders.
 
 - [ChangeDetectorRef](https://angular.dev/api/core/ChangeDetectorRef)
+
+The sidebar supports separate view and edit states. When editing begins, the current user values are copied into an `UpdateUserRequest` model so changes can be made without mutating the displayed user before the update succeeds. Saving changes calls `PUT /users/:id` and sends the ETag from the most recent `GET /users/:id` request through `If-Match`. If the update succeeds, the sidebar stores the updated user and the new ETag returned by the API, then refreshes the current table page so the edited values are reflected immediately. If the stored ETag is stale, the API returns `412 Precondition Failed`. The UI handles this separately from other errors so the administrator is told that the record changed after it was opened and to reload before trying again. But I'm going to add recovery actions instead of asking them to reload next for better user experience.
+
 
 ## Next Steps
 If I had more time these are features I would consider adding:

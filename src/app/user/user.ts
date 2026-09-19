@@ -3,7 +3,7 @@ import { Breadcrumb, BreadcrumbItem } from '../breadcrumb/breadcrumb';
 import { UsersApi } from '../features/users/users-api';
 import { ApiError } from '../features/users/api-response';
 import { FormsModule } from '@angular/forms';
-import { CreateUserRequest, UserModel } from '../models/user';
+import { CreateUserRequest, UpdateUserRequest, UserModel } from '../models/user';
 
 @Component({
   imports: [Breadcrumb, FormsModule],
@@ -126,6 +126,16 @@ export class User {
   selectedUser: UserModel | null = null;
   selectedUserETag = '';
   isLoadingUser = false;
+  isEditingUser = false;
+  sidebarMessage = '';
+  sidebarMessageType: 'success' | 'error' = 'success';
+
+  editUser: UpdateUserRequest = {
+    name: '',
+    email: '',
+    role: 'Viewer',
+    status: 'Active',
+  };
 
   viewUser(id: string) {
     // Open the sidebar immediately before the user data loads and use skeleton placeholders
@@ -163,6 +173,66 @@ export class User {
     this.selectedUser = null;
     this.selectedUserETag = '';
     this.isLoadingUser = false;
+  }
+
+  // seperate editable copy of data so selectedUser isn't immediately changed until changes are submitted
+  startEditingUser() {
+    if (!this.selectedUser) {
+      return;
+    }
+
+    this.editUser = {
+      name: this.selectedUser.name,
+      email: this.selectedUser.email,
+      role: this.selectedUser.role,
+      status: this.selectedUser.status,
+    };
+
+    this.isEditingUser = true;
+  }
+
+  cancelEditingUser() {
+    this.isEditingUser = false;
+  }
+
+  // PUT call
+  saveUser() {
+    if (!this.selectedUser) {
+      return;
+    }
+
+    try {
+      const response = this.usersApi.update(
+        this.selectedUser.id,
+        this.editUser,
+        this.selectedUserETag,
+      );
+
+      // replace the displayed user with the updated response
+      this.selectedUser = response.body;
+
+      // store the new ETag returned by the update
+      this.selectedUserETag = response.headers['ETag'];
+
+      // refresh the current table page so the changes appear there too
+      this.users = this.usersApi.list(this.skip, this.limit);
+
+      this.isEditingUser = false;
+
+      this.sidebarMessage  = `${response.body.name} was updated successfully.`;
+      this.messageType = 'success';
+    } catch (error) {
+      this.messageType = 'error';
+
+      if (error instanceof ApiError && error.status === 412) {
+        this.sidebarMessage  =
+          'This user was changed since you opened it. Reload the user and try again.';
+      } else if (error instanceof ApiError) {
+        this.sidebarMessage  = error.message;
+      } else {
+        this.sidebarMessage  = 'Something went wrong while updating the user.';
+      }
+    }
   }
 
   // testing the api routes
