@@ -30,7 +30,6 @@ One area not called out directly in the brief is auditability and compliance. Fo
 
 I feel like now I've thought about the work sufficiently and will move on to designing it.
 
-
 # Design
 View the design in [Figma](https://www.figma.com/design/t6HIaI4hYzc77uESqc8Was/people-panel?node-id=0-1&t=PYEtPzrMz4qKoQPb-1).
 

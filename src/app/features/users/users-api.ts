@@ -134,6 +134,19 @@ export class UsersApi {
     };
 
     // Save the updated user and increment its version.
+    storedUser.user = updatedUser;
+    storedUser.version++;
+
     // Return the updated user.
+    return {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        ETag: `"${storedUser.version}"`,
+      },
+      body: {
+        ...updatedUser,
+      },
+    };
   }
 }

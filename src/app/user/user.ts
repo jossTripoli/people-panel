@@ -42,5 +42,31 @@ export class User {
       'POST /users/user-1/password-reset response:',
       this.usersApi.resetPassword('user-1'),
     );
+
+    // Test updating a user
+
+    // get user 1 before update
+    const original = this.usersApi.get('user-1');
+    console.log('GET /users/user-1 response:', original);
+
+    // update user 1 
+    const updateResponse = this.usersApi.update(
+      'user-1',
+      {
+        name: 'Updated Yipee',
+        email: 'updated@example.com',
+        role: 'Admin',
+        status: 'Active',
+      },
+      original.headers['ETag'],
+    );
+
+    // show result of update
+    console.log('PUT /users/user-1 response:', updateResponse);
+
+    console.log(
+      'GET /users/user-1 after update:',
+      this.usersApi.get('user-1'),
+    );
   }
 }
