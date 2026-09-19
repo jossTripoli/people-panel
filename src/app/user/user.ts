@@ -21,11 +21,20 @@ export class User {
 
   // Start at the first user
   skip = 0;
-  // Show 25 users per page
-  readonly limit = 25;
+  // Show default of 25 users per page
+  limit = 25;
   // Load current page of users from the API
   users = this.usersApi.list(this.skip, this.limit);
 
+  // Current page number, starting at 1.
+  get currentPage() {
+    return Math.floor(this.skip / this.limit) + 1;
+  }
+
+  // Total number of pages based on the API total.
+  get totalPages() {
+    return Math.ceil(this.users.body.total / this.limit);
+  }
 
   previousPage() {
     // Move back one page, but never let skip go below 0
@@ -41,6 +50,30 @@ export class User {
       // Reload the users for the new page
       this.users = this.usersApi.list(this.skip, this.limit);
     }
+  }
+
+  firstPage() {
+    this.skip = 0;
+    this.users = this.usersApi.list(this.skip, this.limit);
+  }
+
+  lastPage() {
+    this.skip = (this.totalPages - 1) * this.limit;
+    this.users = this.usersApi.list(this.skip, this.limit);
+  }
+
+  changePageLimit() {
+    this.skip = 0;
+    this.users = this.usersApi.list(this.skip, this.limit);
+  }
+
+  // showing # of users message
+  get firstUserNumber() {
+    return this.users.body.total === 0 ? 0 : this.skip + 1;
+  }
+
+  get lastUserNumber() {
+    return Math.min(this.skip + this.limit, this.users.body.total);
   }
 
   // to control wether the creation form is shown

@@ -111,6 +111,8 @@ The user management UI is wired to the in-memory API service rather than reading
 - [Template-driven forms](https://angular.dev/guide/forms/template-driven-forms)
 - [FormsModule API](https://angular.dev/api/forms/FormsModule)
 
+Since there will be many users I am going to add pagination that is in a fixed bar so when changing how many rows to view at once it won't be pushed down the page. I'm also giving the clear information about what page they are on and how many users they are viewing.
+
 ## Next Steps
 If I had more time these are features I would consider adding:
 - Dark mode

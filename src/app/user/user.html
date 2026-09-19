@@ -53,7 +53,7 @@
       </div>
 
       <div>
-        <label for="status" class="block text-sm font-medium">Status</label>
+        <label for="status" class="font-medium text-slate-700">Status</label>
         <select
           id="status"
           [(ngModel)]="newUser.status"
@@ -68,66 +68,127 @@
       <div class="mt-6 flex gap-3">
         <button
           type="button"
-          class="rounded-md border border-divider px-4 py-2"
+          class="cursor-pointer rounded-md border border-divider px-4 py-2"
           (click)="isCreating = false"
         >
           Cancel
         </button>
+
         <button
           type="button"
-          class="rounded-md border bg-primary px-4 py-2 font-medium text-white"
+          class="cursor-pointer rounded-md border bg-primary px-4 py-2 font-medium text-white"
           (click)="createUser()"
         >
           Create User
         </button>
       </div>
-      
-    </div>  
+    </div>
   </div>
 }
 
 <div class="mt-6 overflow-hidden rounded-md border border-divider bg-white/90">
-  <table class="w-full text-left">
+  <table class="w-full table-fixed text-left">
     <thead class="bg-secondary/10">
       <tr class="border-b border-divider">
-        <th class="px-4 py-3 font-semibold">Name</th>
-        <th class="px-4 py-3 font-semibold">Email</th>
-        <th class="px-4 py-3 font-semibold">Role</th>
-        <th class="px-4 py-3 font-semibold">Status</th>
+        <th scope="col" class="px-4 py-3 font-semibold">Name</th>
+        <th scope="col" class="px-4 py-3 font-semibold">Email</th>
+        <th scope="col" class="px-4 py-3 font-semibold">Role</th>
+        <th scope="col" class="px-4 py-3 font-semibold">Status</th>
       </tr>
     </thead>
-
-    <tbody>
-      @for (user of users.body.items; track user.id) {
-        <tr
-          class="border-b border-divider transition-colors last:border-b-0 hover:bg-slate-50"
-        >
-          <td class="px-4 py-4">{{ user.name }}</td>
-          <td class="px-4 py-4">{{ user.email }}</td>
-          <td class="px-4 py-4">{{ user.role }}</td>
-          <td class="px-4 py-4">{{ user.status }}</td>
-        </tr>
-      }
-    </tbody>
   </table>
 
-  <div class="flex gap-2">
-    <button
-      type="button"
-      class="rounded-md border border-divider px-3 py-2 disabled:cursor-not-allowed disabled:opacity-50"
-      (click)="previousPage()"
-      [disabled]="skip === 0"
-    >
-      Previous
-    </button>
+  <div class="h-140 overflow-y-auto">
+    <table class="w-full table-fixed text-left">
+      <tbody>
+        @for (user of users.body.items; track user.id) {
+          <tr
+            class="border-b border-divider transition-colors last:border-b-0 hover:bg-slate-50"
+          >
+            <td class="px-4 py-4">{{ user.name }}</td>
+            <td class="px-4 py-4">{{ user.email }}</td>
+            <td class="px-4 py-4">{{ user.role }}</td>
+            <td class="px-4 py-4">{{ user.status }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 
-    <button
-      type="button"
-      class="rounded-md border border-divider px-3 py-2 disabled:cursor-not-allowed disabled:opacity-50"
-      (click)="nextPage()"
-      [disabled]="skip + limit >= users.body.total"
-    >
-      Next
-    </button>
+  <div
+    class="flex flex-wrap items-center justify-between gap-4 border-t-2 border-t-divider p-4"
+  >
+    <div class="flex flex-wrap items-center gap-4">
+      <div class="flex items-center gap-2">
+        <label for="users-per-page" class="text-slate-700">
+          Users per page
+        </label>
+
+        <select
+          id="users-per-page"
+          [(ngModel)]="limit"
+          (ngModelChange)="changePageLimit()"
+          class="rounded-md border border-divider px-3 py-2"
+        >
+          <option [ngValue]="10">10</option>
+          <option [ngValue]="25">25</option>
+          <option [ngValue]="50">50</option>
+          <option [ngValue]="100">100</option>
+        </select>
+      </div>
+
+      <div class="h-6 border-l border-divider"></div>
+
+      <p class="text-sm text-slate-600">
+        Showing {{ firstUserNumber }}–{{ lastUserNumber }}
+        of {{ users.body.total }} users
+      </p>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-4">
+      <p class="text-sm text-slate-600">
+        Page {{ currentPage }} of {{ totalPages }}
+      </p>
+
+      <div class="h-6 border-l border-divider"></div>
+
+      <div class="flex gap-2">
+        <button
+          type="button"
+          class="cursor-pointer rounded-md border border-divider px-3 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+          (click)="firstPage()"
+          [disabled]="skip === 0"
+        >
+          First
+        </button>
+
+        <button
+          type="button"
+          class="cursor-pointer rounded-md border border-divider px-3 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+          (click)="previousPage()"
+          [disabled]="skip === 0"
+        >
+          Previous
+        </button>
+
+        <button
+          type="button"
+          class="cursor-pointer rounded-md border border-divider px-3 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+          (click)="nextPage()"
+          [disabled]="skip + limit >= users.body.total"
+        >
+          Next
+        </button>
+
+        <button
+          type="button"
+          class="cursor-pointer rounded-md border border-divider px-3 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+          (click)="lastPage()"
+          [disabled]="currentPage === totalPages"
+        >
+          Last
+        </button>
+      </div>
+    </div>
   </div>
 </div>
