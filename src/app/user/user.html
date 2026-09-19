@@ -2,10 +2,9 @@
 
 <h1 class="text-2xl font-semibold">Users</h1>
 
-<p class="mt-2 text-slate-800">
-  Manage users, roles, and access across your organization.
+<p class="mt-2 text-slate-800 max-w-1/2">
+  Browse users and manage their roles and access status. Use the action buttons at the top of the table to filter the table or create new users. Scroll to view the current page of users, then use the controls at the bottom of the table to adjust the page size and navigate through the directory.
 </p>
-
 <button
   type="button"
   class="rounded-md bg-primary px-4 py-2 font-medium cursor-pointer text-white hover:opacity-90 mt-6"
@@ -126,6 +125,7 @@
         <th scope="col" class="px-4 py-3 font-semibold">Email</th>
         <th scope="col" class="px-4 py-3 font-semibold">Role</th>
         <th scope="col" class="px-4 py-3 font-semibold">Status</th>
+        <th scope="col" class="w-24 px-4 py-3"><span class="sr-only">Actions</span></th>
       </tr>
     </thead>
   </table>
@@ -141,6 +141,30 @@
             <td class="px-4 py-4">{{ user.email }}</td>
             <td class="px-4 py-4">{{ user.role }}</td>
             <td class="px-4 py-4">{{ user.status }}</td>
+            <td class="w-20 px-4 py-4 text-center">
+              <button
+                type="button"
+                class="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-md border border-primary/10 bg-secondary/10 text-primary transition-colors hover:bg-secondary/20"
+                [attr.aria-label]="'View ' + user.name"
+              >
+                <!-- Source: https://www.svgviewer.dev/s/21984/eye License: MIT. Made by Bootstrap: https://github.com/twbs/icons -->
+                <svg
+                  class="h-5 w-5"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
+                  />
+                  <path
+                    d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
+                  />
+                </svg>
+              </button>
+            </td>
+
           </tr>
         }
       </tbody>
