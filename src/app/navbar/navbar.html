@@ -6,7 +6,7 @@
       <img src="/logo.svg" alt="" class="w-12" />
 
       <span class="text-lg font-semibold text-primary">
-        People<span class="text-secondary">Panel</span>
+        People<span class="text-primary">Panel</span>
       </span>
     </a>
 
@@ -17,7 +17,7 @@
       @for (link of links; track link.path) {
         <a
           [routerLink]="link.path"
-          routerLinkActive="font-semibold text-secondary underline decoration-3 decoration-secondary underline-offset-17 sm:underline-offset-28"
+          routerLinkActive="font-semibold text-primary underline decoration-3 decoration-primary underline-offset-17 sm:underline-offset-27"
           [routerLinkActiveOptions]="{ exact: link.path === '/' }"
           ariaCurrentWhenActive="page"
           class="py-3 hover:text-primary sm:py-4"
