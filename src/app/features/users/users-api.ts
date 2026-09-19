@@ -112,16 +112,22 @@ export class UsersApi {
     request: UpdateUserRequest,
     ifMatch: string,
   ): ApiResponse<UserModel> {
+    // Find the user to be updated
     const storedUser = this.users.find((item) => item.user.id === id);
-    
+
     if (!storedUser) {
       throw new ApiError(404, 'User not found.');
     }
 
-    // 3. Build the user's current ETag from its stored version. Compare If-Match with the current ETag. Return 412 if they do not match.
+    // Build the user's current ETag from its stored version. Compare If-Match with the current ETag. Return 412 if they do not match.
+    const currentETag = `"${storedUser.version}"`;
 
-    // 4. Create the updated user data and update updatedAt.
-    // 5. Save the updated user and increment its version.
-    // 6. Return the updated user.
+    if (ifMatch !== currentETag) {
+      throw new ApiError(412, 'Precondition failed.');
+    }
+
+    // Create the updated user data and update updatedAt.
+    // Save the updated user and increment its version.
+    // Return the updated user.
   }
 }
