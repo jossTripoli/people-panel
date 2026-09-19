@@ -115,8 +115,8 @@ Since there will be many users I am going to add pagination that is in a fixed b
 
 ## Next Steps
 If I had more time these are features I would consider adding:
-- Style create user button more and have it open up sidebar menu instead form on page
 - Filtering and Sorting
+- Make status a colored status badge
 - Add skeleton loaders
 - Dark mode support
 - Checkboxes next to each user to allow for selecting multiple for bulk actions

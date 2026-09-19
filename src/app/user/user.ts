@@ -132,7 +132,7 @@ export class User {
       this.selectedUser = response.body;
       this.selectedUserETag = response.headers['ETag'];
 
-      console.log(`GET /users/${id} response:`, response);
+      // console.log(`GET /users/${id} response:`, response);
     } catch (error) {
       this.messageType = 'error';
 
