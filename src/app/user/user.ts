@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Breadcrumb, BreadcrumbItem } from '../breadcrumb/breadcrumb';
 import { UsersApi } from '../features/users/users-api';
 import { ApiError } from '../features/users/api-response';
@@ -10,10 +10,11 @@ import { CreateUserRequest, UpdateUserRequest, UserModel } from '../models/user'
   selector: 'app-user',
   templateUrl: './user.html',
 })
-export class User {
+export class User implements OnDestroy {
   // angular service injecting 
   private readonly usersApi = inject(UsersApi);
   private readonly changeDetector = inject(ChangeDetectorRef);
+  private userLoadingTimer: ReturnType<typeof setTimeout> | null = null;
 
   breadcrumbs: BreadcrumbItem[] = [
     { label: 'Dashboard', path: '/' },
@@ -138,11 +139,20 @@ export class User {
   };
 
   viewUser(id: string) {
+    // Cancel any previous simulated request.
+    if (this.userLoadingTimer) {
+      clearTimeout(this.userLoadingTimer);
+    }
+
     // Open the sidebar immediately before the user data loads and use skeleton placeholders
     this.selectedUser = null;
     this.selectedUserETag = '';
     this.isLoadingUser = true;
 
+    // Clear any message from the previously opened user and reset type
+    this.sidebarMessage = '';
+    this.sidebarMessageType = 'success';
+      
     // Simulate network latency while using the in-memory api
     setTimeout(() => {
       try {
@@ -170,6 +180,12 @@ export class User {
   }
 
   closeUserDetails() {
+    // cancel pending loading times when sidebar closes
+    if (this.userLoadingTimer) {
+      clearTimeout(this.userLoadingTimer);
+      this.userLoadingTimer = null;
+    }
+
     this.selectedUser = null;
     this.selectedUserETag = '';
     this.isLoadingUser = false;
@@ -232,6 +248,13 @@ export class User {
       } else {
         this.sidebarMessage  = 'Something went wrong while updating the user.';
       }
+    }
+  }
+
+  // so we will start with a fresh component and no leftover timer next time
+  ngOnDestroy() {
+    if (this.userLoadingTimer) {
+      clearTimeout(this.userLoadingTimer);
     }
   }
 
