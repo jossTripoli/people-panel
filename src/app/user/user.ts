@@ -3,7 +3,7 @@ import { Breadcrumb, BreadcrumbItem } from '../breadcrumb/breadcrumb';
 import { UsersApi } from '../features/users/users-api';
 import { ApiError } from '../features/users/api-response';
 import { FormsModule } from '@angular/forms';
-import { CreateUserRequest } from '../models/user';
+import { CreateUserRequest, UserModel } from '../models/user';
 
 @Component({
   imports: [Breadcrumb, FormsModule],
@@ -122,6 +122,27 @@ export class User {
     }
   }
 
+  selectedUser: UserModel | null = null;
+  selectedUserETag = '';
+
+  viewUser(id: string) {
+    try {
+      const response = this.usersApi.get(id);
+
+      this.selectedUser = response.body;
+      this.selectedUserETag = response.headers['ETag'];
+
+      console.log(`GET /users/${id} response:`, response);
+    } catch (error) {
+      this.messageType = 'error';
+
+      if (error instanceof ApiError) {
+        this.message = error.message;
+      } else {
+        this.message = 'Something went wrong while loading the user.';
+      }
+    }
+  }
   // testing the api routes
   // constructor() {
   //   console.log('GET /users response:', this.users);

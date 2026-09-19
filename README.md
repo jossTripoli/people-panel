@@ -115,8 +115,10 @@ Since there will be many users I am going to add pagination that is in a fixed b
 
 ## Next Steps
 If I had more time these are features I would consider adding:
-- Dark mode
+- Style create user button more and have it open up sidebar menu instead form on page
+- Filtering and Sorting
+- Add skeleton loaders
+- Dark mode support
 - Checkboxes next to each user to allow for selecting multiple for bulk actions
 - Exporting info into spreadsheet
 - Implement the dashboard and activity pages
-- Add skeleton loaders
