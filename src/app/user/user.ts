@@ -3,6 +3,7 @@ import { Breadcrumb, BreadcrumbItem } from '../breadcrumb/breadcrumb';
 import { UsersApi } from '../features/users/users-api';
 import { ApiError } from '../features/users/api-response';
 import { FormsModule } from '@angular/forms';
+import { CreateUserRequest } from '../models/user';
 
 @Component({
   imports: [Breadcrumb, FormsModule],
@@ -24,12 +25,20 @@ export class User {
   isCreating = false;
 
   // creates the newUser class which defines the data model reflected in the form.
-  newUser = {
+  newUser: CreateUserRequest = {
     name: '',
     email: '',
     role: 'Viewer',
     status: 'Active',
   };
+
+  createUser() {
+    const response = this.usersApi.create(this.newUser);
+
+    console.log('POST /users response:', response);
+
+    this.isCreating = false;
+  }
 
   // testing the api routes
   constructor() {
