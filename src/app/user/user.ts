@@ -19,6 +19,9 @@ export class User {
 
   readonly users = this.usersApi.list();
 
+  // to control wether the creation form is shown
+  isCreating = false;
+
   // testing the api routes
   constructor() {
     console.log('GET /users response:', this.users);

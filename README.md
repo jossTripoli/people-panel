@@ -1,5 +1,5 @@
 # People Panel
-This project is an user management UI for an application administrator. I assume that the administrators are not highly technical users, so I'll aim to make it approachable. For example, I will make it more like the management UIs of Wordpress or Shopify, rather than say AWS IAM (Identity and Access Management). I'll prioritize clear terminology, efficient workflows, and familiar interaction patterns.
+This project is a user management UI for an application administrator. I assume that the administrators are not highly technical users, so I'll aim to make it approachable. For example, I will make it more like the management UIs of Wordpress or Shopify, rather than say AWS IAM (Identity and Access Management). I'll prioritize clear terminology, efficient workflows, and familiar interaction patterns.
 
 ## Architecture Decisions
 I’ve designed and built several admin and internal dashboards before, so the core problem is familiar. At DART Collective, I worked on dashboards for managing users, learner analytics, donors and donations, course creation, and educator workflows. At MiniNature Reserve, I built a custom admin dashboard that lets the team manage site content, team member profiles, and permissions for tasks like authoring blog posts.
@@ -96,9 +96,25 @@ Responses use a shared HTTP-style structure. For example, GET /users returns:
   }
 }
 ```
+| Method | Route                       | Purpose                 |
+| ------ | --------------------------- | ----------------------- |
+| `GET`  | `/users`                    | List users              |
+| `GET`  | `/users/:id`                | Get a single user       |
+| `POST` | `/users`                    | Create a user           |
+| `PUT`  | `/users/:id`                | Update a user           |
+| `POST` | `/users/:id/password-reset` | Reset a user's password |
+
+### Frontend Integration
+
+The user management UI is wired to the in-memory API service rather than reading or mutating the user store directly. I am using the Angular template-driven forms:
+
+- [Template-driven forms](https://angular.dev/guide/forms/template-driven-forms)
+- [FormsModule API](https://angular.dev/api/forms/FormsModule)
 
 ## Next Steps
 If I had more time these are features I would consider adding:
 - Dark mode
 - Checkboxes next to each user to allow for selecting multiple for bulk actions
 - Exporting info into spreadsheet
+- Implement the dashboard and activity pages
+- Add skeleton loaders

@@ -9,9 +9,24 @@
 <button
   type="button"
   class="rounded-md bg-primary px-4 py-2 font-medium cursor-pointer text-white hover:opacity-90 mt-6"
+  (click)="isCreating = true"
 >
   Create User
 </button>
+
+@if (isCreating) {
+  <div class="mt-6 rounded-md border border-divider bg-white p-6">
+    <h2 class="text-lg font-semibold">Create User Form</h2>
+
+    <button
+      type="button"
+      class="mt-4 text-sm underline cursor-pointer"
+      (click)="isCreating = false"
+    >
+      Cancel
+    </button>
+  </div>
+}
 
 <div class="mt-6 overflow-hidden rounded-md border border-divider bg-white/90">
   <table class="w-full text-left">
