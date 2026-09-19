@@ -2,7 +2,7 @@
 
 <h1 class="text-2xl font-semibold">Users</h1>
 
-<p class="mt-2 text-slate-800 max-w-1/2">
+<p class="mt-2 text-slate-800 xl:max-w-1/2">
   Browse users and manage their roles and access status. Use the action buttons at the top of the table to filter the table or create new users. Scroll to view the current page of users, then use the controls at the bottom of the table to adjust the page size and navigate through the directory.
 </p>
 <button
@@ -122,7 +122,7 @@
     <thead class="bg-secondary/10">
       <tr class="border-b border-divider">
         <th scope="col" class="px-4 py-3 font-semibold">Name</th>
-        <th scope="col" class="hidden sm:table-cell px-4 py-3 font-semibold">Email</th>
+        <th scope="col" class="hidden xl:table-cell px-4 py-3 font-semibold">Email</th>
         <th scope="col" class="px-4 py-3 font-semibold">Role</th>
         <th scope="col" class="px-4 py-3 font-semibold">Status</th>
         <th scope="col" class="w-24 px-4 py-3"><span class="sr-only">Actions</span></th>
@@ -138,7 +138,7 @@
             class="border-b border-divider transition-colors last:border-b-0 hover:bg-slate-50"
           >
             <td class="px-4 py-4">{{ user.name }}</td>
-            <td class="hidden sm:table-cell px-4 py-4">{{ user.email }}</td>
+            <td class="hidden xl:table-cell px-4 py-4">{{ user.email }}</td>
             <td class="px-4 py-4">{{ user.role }}</td>
             <td class="px-4 py-4">{{ user.status }}</td>
             <td class="w-20 px-4 py-4 text-center">
