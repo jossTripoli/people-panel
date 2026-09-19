@@ -110,4 +110,24 @@
       }
     </tbody>
   </table>
+
+  <div class="flex gap-2">
+    <button
+      type="button"
+      class="rounded-md border border-divider px-3 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+      (click)="previousPage()"
+      [disabled]="skip === 0"
+    >
+      Previous
+    </button>
+
+    <button
+      type="button"
+      class="rounded-md border border-divider px-3 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+      (click)="nextPage()"
+      [disabled]="skip + limit >= users.body.total"
+    >
+      Next
+    </button>
+  </div>
 </div>

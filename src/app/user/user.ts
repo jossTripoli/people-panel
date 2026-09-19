@@ -19,7 +19,29 @@ export class User {
     { label: 'User' },
   ];
 
-  readonly users = this.usersApi.list();
+  // Start at the first user
+  skip = 0;
+  // Show 25 users per page
+  readonly limit = 25;
+  // Load current page of users from the API
+  users = this.usersApi.list(this.skip, this.limit);
+
+
+  previousPage() {
+    // Move back one page, but never let skip go below 0
+    this.skip = Math.max(0, this.skip - this.limit);
+    // Reload the users for the new page
+    this.users = this.usersApi.list(this.skip, this.limit);
+  }
+
+  nextPage() {
+    // Only move forward if there are more users after this page
+    if (this.skip + this.limit < this.users.body.total) {
+      this.skip += this.limit;
+      // Reload the users for the new page
+      this.users = this.usersApi.list(this.skip, this.limit);
+    }
+  }
 
   // to control wether the creation form is shown
   isCreating = false;
