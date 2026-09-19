@@ -119,7 +119,7 @@ export class UsersApi {
       throw new ApiError(404, 'User not found.');
     }
 
-    // Build the user's current ETag from its stored version. Compare If-Match with the current ETag. Return 412 if they do not match.
+    // Only update if the client is using the latest version it read.
     const currentETag = `"${storedUser.version}"`;
 
     if (ifMatch !== currentETag) {
@@ -127,6 +127,12 @@ export class UsersApi {
     }
 
     // Create the updated user data and update updatedAt.
+    const updatedUser: UserModel = {
+      ...storedUser.user,
+      ...request,
+      updatedAt: new Date().toISOString(),
+    };
+
     // Save the updated user and increment its version.
     // Return the updated user.
   }
