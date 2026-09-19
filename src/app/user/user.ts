@@ -14,7 +14,7 @@ export class User {
   // angular service injecting 
   private readonly usersApi = inject(UsersApi);
   private readonly changeDetector = inject(ChangeDetectorRef);
-  
+
   breadcrumbs: BreadcrumbItem[] = [
     { label: 'Dashboard', path: '/' },
     { label: 'User' },
@@ -133,6 +133,7 @@ export class User {
     this.selectedUserETag = '';
     this.isLoadingUser = true;
 
+    // Simulate network latency while using the in-memory api
     setTimeout(() => {
       try {
         const response = this.usersApi.get(id);
@@ -152,11 +153,18 @@ export class User {
       } finally {
         this.isLoadingUser = false;
 
-        // Tell Angular to render the loaded user after the simulated delay.
-        this.changeDetector.markForCheck();
+        // Tell Angular immediately update the view after the simulated delay
+        this.changeDetector.detectChanges();
       }
     }, 500);
   }
+
+  closeUserDetails() {
+    this.selectedUser = null;
+    this.selectedUserETag = '';
+    this.isLoadingUser = false;
+  }
+
   // testing the api routes
   // constructor() {
   //   console.log('GET /users response:', this.users);
