@@ -1,6 +1,10 @@
 # People Panel
 This project is a user management UI for an application administrator. I assume that the administrators are not highly technical users, so I'll aim to make it approachable. For example, I will make it more like the management UIs of Wordpress or Shopify, rather than say AWS IAM (Identity and Access Management). I'll prioritize clear terminology, efficient workflows, and familiar interaction patterns.
 
+## Live Demo
+View the deployed application at:  
+https://people-panel.vercel.app/
+
 ## Architecture Decisions
 I’ve designed and built several admin and internal dashboards before, so the core problem is familiar. At DART Collective, I worked on dashboards for managing users, learner analytics, donors and donations, course creation, and educator workflows. At MiniNature Reserve, I built a custom admin dashboard that lets the team manage site content, team member profiles, and permissions for tasks like authoring blog posts.
 
