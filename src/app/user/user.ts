@@ -89,109 +89,109 @@ export class User {
 
   message = '';
   messageType: 'success' | 'error' = 'success';
+  isCreatingUser = false;
 
-createUser() {
-  try {
-    const response = this.usersApi.create(this.newUser);
-
-    this.message = `${response.body.name} was created successfully.`;
-    this.messageType = 'success';
-
-    const totalUsers = this.usersApi.list(0, this.limit).body.total;
-
-    this.skip = Math.floor((totalUsers - 1) / this.limit) * this.limit;
-    this.users = this.usersApi.list(this.skip, this.limit);
-
-    this.newUser = {
-      name: '',
-      email: '',
-      role: 'Viewer',
-      status: 'Active',
-    };
-
-    this.isCreating = false;
-  } catch (error) {
-    this.messageType = 'error';
-
-    if (error instanceof ApiError) {
-      this.message = error.message;
-    } else {
-      this.message = 'Something went wrong while creating the user.';
-    }
-  }
-}
-
-  // testing the api routes
-  constructor() {
-    console.log('GET /users response:', this.users);
-    console.log('GET /users/3 response:', this.usersApi.get('user-3'));
-
-
-    const createResponse = this.usersApi.create({
-      name: 'Test User',
-      email: 'test@example.com',
-      role: 'Viewer',
-      status: 'Active',
-    });
-
-    console.log('POST /users response:', createResponse);
-
-    console.log(
-      'GET /users last page:',
-      this.usersApi.list(100, 25),
-    );
-
-    console.log(
-      'POST /users/user-1/password-reset response:',
-      this.usersApi.resetPassword('user-1'),
-    );
-
-    // Test updating a user
-
-    // get user 1 before update
-    const original = this.usersApi.get('user-1');
-    console.log('GET /users/user-1 response:', original);
-
-    // update user 1 
-    const updateResponse = this.usersApi.update(
-      'user-1',
-      {
-        name: 'Updated Yipee',
-        email: 'updated@example.com',
-        role: 'Admin',
-        status: 'Active',
-      },
-      original.headers['ETag'],
-    );
-
-    // show result of update
-    console.log('PUT /users/user-1 response:', updateResponse);
-
-    console.log(
-      'GET /users/user-1 after update:',
-      this.usersApi.get('user-1'),
-    );
-
-    // testing stale ETAG
+  createUser() {
     try {
-      this.usersApi.update(
-        'user-1',
-        {
-          name: 'Another update',
-          email: 'another@example.com',
-          role: 'Viewer',
-          status: 'Invited',
-        },
-        original.headers['ETag'],
-      );
+      const response = this.usersApi.create(this.newUser);
+
+      this.message = `${response.body.name} was created successfully.`;
+      this.messageType = 'success';
+
+      const totalUsers = this.usersApi.list(0, this.limit).body.total;
+
+      this.skip = Math.floor((totalUsers - 1) / this.limit) * this.limit;
+      this.users = this.usersApi.list(this.skip, this.limit);
+
+      this.newUser = {
+        name: '',
+        email: '',
+        role: 'Viewer',
+        status: 'Active',
+      };
+
+      this.isCreating = false;
     } catch (error) {
+      this.messageType = 'error';
+
       if (error instanceof ApiError) {
-        console.log('PUT /users/user-1 stale ETag error:', {
-          status: error.status,
-          message: error.message,
-        });
+        this.message = error.message;
+      } else {
+        this.message = 'Something went wrong while creating the user.';
       }
     }
-
   }
+
+  // testing the api routes
+  // constructor() {
+  //   console.log('GET /users response:', this.users);
+  //   console.log('GET /users/3 response:', this.usersApi.get('user-3'));
+
+
+  //   const createResponse = this.usersApi.create({
+  //     name: 'Test User',
+  //     email: 'test@example.com',
+  //     role: 'Viewer',
+  //     status: 'Active',
+  //   });
+
+  //   console.log('POST /users response:', createResponse);
+
+  //   console.log(
+  //     'GET /users last page:',
+  //     this.usersApi.list(100, 25),
+  //   );
+
+  //   console.log(
+  //     'POST /users/user-1/password-reset response:',
+  //     this.usersApi.resetPassword('user-1'),
+  //   );
+
+  //   // Test updating a user
+
+  //   // get user 1 before update
+  //   const original = this.usersApi.get('user-1');
+  //   console.log('GET /users/user-1 response:', original);
+
+  //   // update user 1 
+  //   const updateResponse = this.usersApi.update(
+  //     'user-1',
+  //     {
+  //       name: 'Updated Yipee',
+  //       email: 'updated@example.com',
+  //       role: 'Admin',
+  //       status: 'Active',
+  //     },
+  //     original.headers['ETag'],
+  //   );
+
+  //   // show result of update
+  //   console.log('PUT /users/user-1 response:', updateResponse);
+
+  //   console.log(
+  //     'GET /users/user-1 after update:',
+  //     this.usersApi.get('user-1'),
+  //   );
+
+  //   // testing stale ETAG
+  //   try {
+  //     this.usersApi.update(
+  //       'user-1',
+  //       {
+  //         name: 'Another update',
+  //         email: 'another@example.com',
+  //         role: 'Viewer',
+  //         status: 'Invited',
+  //       },
+  //       original.headers['ETag'],
+  //     );
+  //   } catch (error) {
+  //     if (error instanceof ApiError) {
+  //       console.log('PUT /users/user-1 stale ETag error:', {
+  //         status: error.status,
+  //         message: error.message,
+  //       });
+  //     }
+  //   }
+  // }
 }

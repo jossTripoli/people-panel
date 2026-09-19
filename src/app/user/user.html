@@ -100,8 +100,18 @@
           type="button"
           class="cursor-pointer rounded-md border bg-primary px-4 py-2 font-medium text-white"
           (click)="createUser()"
+          [disabled]="isCreatingUser"
         >
-          Create User
+          @if (isCreatingUser) {
+            <span
+              class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
+              aria-hidden="true"
+            ></span>
+
+            Creating...
+          } @else {
+            Create User
+          }
         </button>
       </div>
     </div>

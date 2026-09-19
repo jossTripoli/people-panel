@@ -6,7 +6,7 @@ import { seedUsers, StoredUser } from './seed-users';
 @Service()
 export class UsersApi {
   // in memory user store. array of user objects
-  private users: StoredUser[] = seedUsers(100);
+  private users: StoredUser[] = seedUsers(50000);
 
   // GET /users
   list(skip = 0, limit = 25): ApiResponse<UsersResponse> {

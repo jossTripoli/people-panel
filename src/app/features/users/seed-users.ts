@@ -35,36 +35,37 @@ const lastNames = [
 const roles: UserRole[] = ['Admin', 'Editor', 'Viewer'];
 const statuses: UserStatus[] = ['Active', 'Invited', 'Suspended'];
 
-export function seedUsers(count = 100): StoredUser[] {
+export function seedUsers(count: number): StoredUser[] {
   const users: StoredUser[] = [];
 
-  // Go through each last name
-  for (const lastName of lastNames) {
-    // for each last name combine it with every first name
-    for (const firstName of firstNames) {
-      // stop if we've created enough names
-      if (users.length >= count) {
-        return users;
+  while (users.length < count) {
+    // Go through each last name
+    for (const lastName of lastNames) {
+      // for each last name combine it with every first name
+      for (const firstName of firstNames) {
+        // stop once we've created the requested number of users.
+        if (users.length >= count) {
+          return users;
+        }
+
+        // create user number using current array length
+        const number = users.length + 1;
+
+        users.push({
+          user: {
+            id: `user-${number}`,
+            name: `${firstName} ${lastName}`,
+            email: `${firstName}.${lastName}${number}@example.com`.toLowerCase(),
+            role: roles[number % roles.length],
+            status: statuses[number % statuses.length],
+            createdAt: '2026-01-01T12:00:00Z',
+            updatedAt: '2026-01-01T12:00:00Z',
+          },
+          // Internal version to create ETag values.
+          version: 1,
+        });
       }
-
-      // create user number using current array length
-      const number = users.length + 1;
-
-      users.push({
-        user: {
-          id: `user-${number}`,
-          name: `${firstName} ${lastName}`,
-          email: `${firstName}.${lastName}${number}@example.com`.toLowerCase(),
-          role: roles[number % roles.length],
-          status: statuses[number % statuses.length],
-          createdAt: '2026-01-01T12:00:00Z',
-          updatedAt: '2026-01-01T12:00:00Z',
-        },
-        // Internal version to create ETag values.
-        version: 1,
-      });
     }
   }
-
   return users;
 }
