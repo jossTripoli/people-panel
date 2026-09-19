@@ -1,5 +1,5 @@
 import { Service } from '@angular/core';
-import { UserModel, UsersResponse, CreateUserRequest } from '../../models/user';
+import { UserModel, UsersResponse, CreateUserRequest, UpdateUserRequest } from '../../models/user';
 import { ApiResponse, ApiError } from './api-response';
 import { seedUsers, StoredUser } from './seed-users';
 
@@ -103,5 +103,19 @@ export class UsersApi {
       headers: {},
       body: undefined,
     };
+  }
+
+
+  // PUT /users/:id
+  update(
+    id: string,
+    request: UpdateUserRequest,
+    ifMatch: string,
+  ): ApiResponse<UserModel> {
+    // 1. Find the user by ID.
+    // 2. Return 404 if the user does not exist.    
+    // 4. Create the updated user data and update updatedAt.
+    // 5. Save the updated user and increment its version.
+    // 6. Return the updated user.
   }
 }

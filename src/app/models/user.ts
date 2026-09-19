@@ -23,3 +23,10 @@ export interface CreateUserRequest {
   role: UserRole;
   status: UserStatus;
 }
+
+export interface UpdateUserRequest {
+  name: string;
+  email: string;
+  role: UserRole;
+  status: UserStatus;
+}
