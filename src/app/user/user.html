@@ -51,15 +51,37 @@
           <option value="Viewer">Viewer</option>
         </select>
       </div>
-    </div>  
 
-    <button
-      type="button"
-      class="mt-4 text-sm underline cursor-pointer"
-      (click)="isCreating = false"
-    >
-      Cancel
-    </button>
+      <div>
+        <label for="status" class="block text-sm font-medium">Status</label>
+        <select
+          id="status"
+          [(ngModel)]="newUser.status"
+          class="mt-1 w-full rounded-md border border-divider px-3 py-2"
+        >
+          <option value="Active">Active</option>
+          <option value="Invited">Invited</option>
+          <option value="Suspended">Suspended</option>
+        </select>
+      </div>
+
+      <div class="mt-6 flex gap-3">
+        <button
+          type="button"
+          class="rounded-md border border-divider px-4 py-2"
+          (click)="isCreating = false"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="rounded-md border bg-primary px-4 py-2 font-medium text-white"
+        >
+          Create User
+        </button>
+      </div>
+      
+    </div>  
   </div>
 }
 
