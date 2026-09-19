@@ -113,11 +113,17 @@ The user management UI is wired to the in-memory API service rather than reading
 
 Since there will be many users I am going to add pagination that is in a fixed bar so when changing how many rows to view at once it won't be pushed down the page. I'm also giving the clear information about what page they are on and how many users they are viewing.
 
+### Loading States
+
+Because the API is backed by an in-memory store the requests are complete almost immediately. To make loading states visible and demonstrate how the interface would behave with real network latency I'm adding a short simulated delay using `setTimeout` when clicking to view the user. I'm using angular's `ChangeDetectorRef` to update the view after the delayed operation completes. Tailwind css animation makes it very easy to add the pulsating skeleton loaders.
+
+- [ChangeDetectorRef](https://angular.dev/api/core/ChangeDetectorRef)
+
 ## Next Steps
 If I had more time these are features I would consider adding:
 - Filtering and Sorting
 - Make status a colored status badge
-- Add skeleton loaders
+- Add skeleton loaders to rest of components
 - Dark mode support
 - Checkboxes next to each user to allow for selecting multiple for bulk actions
 - Exporting info into spreadsheet

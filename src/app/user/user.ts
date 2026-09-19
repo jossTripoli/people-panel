@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { Breadcrumb, BreadcrumbItem } from '../breadcrumb/breadcrumb';
 import { UsersApi } from '../features/users/users-api';
 import { ApiError } from '../features/users/api-response';
@@ -13,7 +13,8 @@ import { CreateUserRequest, UserModel } from '../models/user';
 export class User {
   // angular service injecting 
   private readonly usersApi = inject(UsersApi);
-
+  private readonly changeDetector = inject(ChangeDetectorRef);
+  
   breadcrumbs: BreadcrumbItem[] = [
     { label: 'Dashboard', path: '/' },
     { label: 'User' },
@@ -124,24 +125,37 @@ export class User {
 
   selectedUser: UserModel | null = null;
   selectedUserETag = '';
+  isLoadingUser = false;
 
   viewUser(id: string) {
-    try {
-      const response = this.usersApi.get(id);
+    // Open the sidebar immediately before the user data loads and use skeleton placeholders
+    this.selectedUser = null;
+    this.selectedUserETag = '';
+    this.isLoadingUser = true;
 
-      this.selectedUser = response.body;
-      this.selectedUserETag = response.headers['ETag'];
+    setTimeout(() => {
+      try {
+        const response = this.usersApi.get(id);
 
-      // console.log(`GET /users/${id} response:`, response);
-    } catch (error) {
-      this.messageType = 'error';
+        this.selectedUser = response.body;
+        this.selectedUserETag = response.headers['ETag'];
 
-      if (error instanceof ApiError) {
-        this.message = error.message;
-      } else {
-        this.message = 'Something went wrong while loading the user.';
+        // console.log(`GET /users/${id} response:`, response);
+      } catch (error) {
+        this.messageType = 'error';
+
+        if (error instanceof ApiError) {
+          this.message = error.message;
+        } else {
+          this.message = 'Something went wrong while loading the user.';
+        }
+      } finally {
+        this.isLoadingUser = false;
+
+        // Tell Angular to render the loaded user after the simulated delay.
+        this.changeDetector.markForCheck();
       }
-    }
+    }, 500);
   }
   // testing the api routes
   // constructor() {

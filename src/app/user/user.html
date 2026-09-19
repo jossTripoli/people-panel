@@ -146,6 +146,7 @@
                 type="button"
                 class="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-md border border-primary/10 bg-secondary/10 text-primary transition-colors hover:bg-secondary/20"
                 [attr.aria-label]="'View ' + user.name"
+                (click)="viewUser(user.id)"
               >
                 <!-- Source: https://www.svgviewer.dev/s/21984/eye License: MIT. Made by Bootstrap: https://github.com/twbs/icons -->
                 <svg
@@ -153,8 +154,6 @@
                   viewBox="0 0 16 16"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
-                  [attr.aria-label]="'View ' + user.name"
-                  (click)="viewUser(user.id)"
                 >
                   <path
                     d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
@@ -250,7 +249,7 @@
   </div>
 </div>
 
-@if (selectedUser) {
+@if (isLoadingUser || selectedUser) {
   <!-- Dark overlay behind the sidebar -->
   <div
     class="fixed inset-0 z-20 bg-black/40"
@@ -277,35 +276,59 @@
     </div>
 
     <div class="mt-6 px-6 space-y-5">
-      <div>
-        <p class="text-sm font-medium text-slate-500">Name</p>
-        <p class="mt-1">{{ selectedUser.name }}</p>
-      </div>
+        <div>
+          <p class="text-sm font-medium text-slate-500">Name</p>
+          @if (isLoadingUser) {
+            <div class="mt-2 h-5 w-40 animate-pulse rounded bg-slate-200"></div>
+          } @else if (selectedUser) {
+            <p class="mt-1">{{ selectedUser.name }}</p>
+          }
+        </div>
 
-      <div>
-        <p class="text-sm font-medium text-slate-500">Email</p>
-        <p class="mt-1">{{ selectedUser.email }}</p>
-      </div>
+        <div>
+          <p class="text-sm font-medium text-slate-500">Email</p>
+          @if (isLoadingUser) {
+            <div class="mt-2 h-5 w-56 animate-pulse rounded bg-slate-200"></div>
+          } @else if (selectedUser) {
+            <p class="mt-1">{{ selectedUser.email }}</p>
+          }
+        </div>
 
-      <div>
-        <p class="text-sm font-medium text-slate-500">Role</p>
-        <p class="mt-1">{{ selectedUser.role }}</p>
-      </div>
+        <div>
+          <p class="text-sm font-medium text-slate-500">Role</p>
+          @if (isLoadingUser) {
+            <div class="mt-2 h-5 w-24 animate-pulse rounded bg-slate-200"></div>
+          } @else if (selectedUser) {
+            <p class="mt-1">{{ selectedUser.role }}</p>
+          }
+        </div>
 
-      <div>
-        <p class="text-sm font-medium text-slate-500">Status</p>
-        <p class="mt-1">{{ selectedUser.status }}</p>
-      </div>
+        <div>
+          <p class="text-sm font-medium text-slate-500">Status</p>
+          @if (isLoadingUser) {
+            <div class="mt-2 h-5 w-24 animate-pulse rounded bg-slate-200"></div>
+          } @else if (selectedUser) {
+            <p class="mt-1">{{ selectedUser.status }}</p>
+          }        
+        </div>
 
-      <div>
-        <p class="text-sm font-medium text-slate-500">Created</p>
-        <p class="mt-1">{{ selectedUser.createdAt }}</p>
-      </div>
+        <div>
+          <p class="text-sm font-medium text-slate-500">Created</p>
+          @if (isLoadingUser) {
+            <div class="mt-2 h-5 w-36 animate-pulse rounded bg-slate-200"></div>
+          } @else if (selectedUser) {
+            <p class="mt-1">{{ selectedUser.createdAt }}</p>
+          }        
+        </div>
 
-      <div>
-        <p class="text-sm font-medium text-slate-500">Last Updated</p>
-        <p class="mt-1">{{ selectedUser.updatedAt }}</p>
-      </div>
+        <div>
+          <p class="text-sm font-medium text-slate-500">Last Updated</p>
+          @if (isLoadingUser) {
+            <div class="mt-2 h-5 w-36 animate-pulse rounded bg-slate-200"></div>
+          } @else if (selectedUser) {
+            <p class="mt-1">{{ selectedUser.updatedAt }}</p>
+          }        
+        </div>
     </div>
 
     <div class="mt-4 p-6 flex gap-3">
