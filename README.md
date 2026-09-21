@@ -167,8 +167,20 @@ When an update returns `412 Precondition Failed`, the sidebar UI gives the admin
 
 In the UI, I use the labels **Discard my changes** and **Keep my changes** instead of reload and overwrite as described in the brief because they describe the outcome in terms of the administrator's current edits rather than the underlying HTTP behavior. This makes the recovery options clearer to someone who does not need to understand ETags or optimistic concurrency.
 
+## Lighthouse Audit
+
+![Lighthouse results showing 100 for Performance, Accessibility, and Best Practices](/public/lightsail-audit.png)
+
+I used Lighthouse throughout development to check the production build for performance, accessibility, and general web best practices. The deployed application received scores of **100 for Performance, 100 for Accessibility, and 100 for Best Practices**.
+
+The lower SEO score is intentional. PeoplePanel is an administrative dashboard rather than a public-facing website, so I configured the deployed demo not to be indexed by search engines using `robots.txt` and the `noindex` robots meta tag.
+
 ## Next Steps
 If I had more time these are features I would consider adding:
+- Add automated tests using Angular’s testing tools. I focused this take-home on implementing the required functionality. I would add unit tests for the API service, pagination logic, form behavior, user editing, ETag conflict handling, password reset actions, and key component interactions
+- Test the application across additional browsers, screen sizes, and physical devices
+- Add hands on initial onboarding / product walkthrough workflow for first visit instead of the paragraph
+- Add user deletion with a confirmation workflow
 - Filtering and Sorting
 - Make status a colored status badge instead of plain text
 - Add skeleton loaders to rest of components

@@ -3,7 +3,7 @@
 <h1 class="text-2xl font-semibold">Users</h1>
 
 <p class="mt-2 text-slate-800 xl:max-w-1/2">
-  Browse users and manage their roles and access status. Use the action buttons at the top of the table to filter the table or create new users. Scroll to view the current page of users, then use the controls at the bottom of the table to adjust the page size and navigate through the directory.
+  Browse users and manage their roles and access status. Create new users from the controls above the table, or select the eye icon next to a user to view their details, edit their information, and send password reset. Scroll to view the current page of users, then use the controls below the table to adjust the page size and navigate through the directory.
 </p>
 <button
   type="button"
@@ -196,14 +196,14 @@
       <div class="h-6 border-l border-divider"></div>
 
       <p class="text-sm text-slate-600">
-        Showing {{ firstUserNumber }}–{{ lastUserNumber }}
-        of {{ users.body.total }} users
+        Showing {{ firstUserNumber | number }}–{{ lastUserNumber | number }}
+        of {{ users.body.total | number }} users
       </p>
     </div>
 
     <div class="flex flex-wrap items-center gap-4">
       <p class="text-sm text-slate-600">
-        Page {{ currentPage }} of {{ totalPages }}
+        Page {{ currentPage | number }} of {{ totalPages | number }}
       </p>
 
       <div class="h-6 border-l border-divider"></div>

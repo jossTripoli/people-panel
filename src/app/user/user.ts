@@ -4,9 +4,10 @@ import { UsersApi } from '../features/users/users-api';
 import { ApiError } from '../features/users/api-response';
 import { FormsModule } from '@angular/forms';
 import { CreateUserRequest, UpdateUserRequest, UserModel } from '../models/user';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
-  imports: [Breadcrumb, FormsModule],
+  imports: [Breadcrumb, FormsModule, DecimalPipe],
   selector: 'app-user',
   templateUrl: './user.html',
 })
